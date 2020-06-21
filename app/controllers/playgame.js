@@ -129,4 +129,10 @@ export default class PlaygameController extends Controller {
   }
 
   currentMarker = "x"; //player 1 starts as 'x', we can offer ability to change to 'o' in  future
+
+  @action
+  setGrid() {
+    console.log("pushed");
+    this.set("model.grid", createGrid(3));
+  }
 }

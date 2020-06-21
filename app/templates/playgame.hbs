@@ -4,6 +4,8 @@
     <p>{{player.name}}</p>
   {{/each}}
 
+  <Button @function={{this.setGrid}}>Start</Button>
+
   <Grid>
     {{#each @model.grid as |row|}}
       {{#each row as |square|}}
