@@ -8,7 +8,7 @@
     {{#each this.model.grid as |row|}}
       {{#each row as |square|}}
       {{log square}}
-        <div class="grid__item">test</div>  
+        <div class="grid__item">{{square.marker}}</div>  
       {{/each}}
     {{/each}}
   </Grid>

@@ -4,9 +4,9 @@ export default class PlaygameRoute extends Route {
   model() {
     return {
       grid: [
-        ["x", "x", "x"],
-        ["", "", ""],
-        ["", "", ""],
+        [{}, {}, {}],
+        [{}, {}, {}],
+        [{}, {}, {}],
       ],
       players: [
         {
