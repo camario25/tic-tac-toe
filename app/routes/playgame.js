@@ -18,6 +18,7 @@ export default class PlaygameRoute extends Route {
   model() {
     return {
       grid: startingGrid,
+      // grid: [],
       players: [
         {
           playerNumber: 1,

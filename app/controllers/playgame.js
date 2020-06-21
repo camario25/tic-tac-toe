@@ -2,19 +2,73 @@ import Controller from "@ember/controller";
 import { action } from "@ember/object";
 
 // initialize the grid function
-// function createGrid(size) {
-//   const grid = [];
-//   const tempArr = [];
-//   for (let i = 0; i < size; i++) {
-//     tempArr[i] = { marker: "x" };
-//     for (let j = 0; j < size; j++) {
-//       grid[i] = tempArr;
-//     }
-//   }
-//   return grid;
-// }
+function createGrid(size) {
+  const grid = [];
+  const tempArr = [];
+  for (let i = 0; i < size; i++) {
+    tempArr[i] = { marker: "x" };
+    for (let j = 0; j < size; j++) {
+      grid[i] = tempArr;
+    }
+  }
+  return grid;
+}
 // const startingGrid = createGrid(3);
 //Dertirmine Winner * only for three in a row for now
+
+function isWinner(grid) {
+  if (
+    grid[0][0].marker !== "" &&
+    grid[0][0].marker === grid[0][1].marker &&
+    grid[0][1].marker === grid[0][2].marker
+  ) {
+    return true;
+  } else if (
+    grid[1][0].marker !== "" &&
+    grid[1][0].marker === grid[1][1].marker &&
+    grid[1][1].marker === grid[1][2].marker
+  ) {
+    return true;
+  } else if (
+    grid[2][0].marker !== "" &&
+    grid[2][0].marker === grid[2][1].marker &&
+    grid[2][1].marker === grid[2][2].marker
+  ) {
+    return true;
+  } else if (
+    grid[0][0].marker !== "" &&
+    grid[0][0].marker === grid[1][0].marker &&
+    grid[1][0].marker === grid[2][0].marker
+  ) {
+    return true;
+  } else if (
+    grid[0][1].marker !== "" &&
+    grid[0][1].marker === grid[1][1].marker &&
+    grid[1][1].marker === grid[2][1].marker
+  ) {
+    return true;
+  } else if (
+    grid[0][2].marker !== "" &&
+    grid[0][2].marker === grid[1][2].marker &&
+    grid[1][2].marker === grid[2][2].marker
+  ) {
+    return true;
+  } else if (
+    grid[0][0].marker !== "" &&
+    grid[0][0].marker === grid[1][1].marker &&
+    grid[1][1].marker === grid[2][2].marker
+  ) {
+    return true;
+  } else if (
+    grid[0][2].marker !== "" &&
+    grid[0][2].marker === grid[1][1].marker &&
+    grid[1][1].marker === grid[2][0].marker
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 //Check if board still has spaces
 
@@ -30,8 +84,7 @@ import { action } from "@ember/object";
 export default class PlaygameController extends Controller {
   constructor() {
     super(...arguments);
-    console.log("hi");
   }
-  // grid = startingGrid;
+
   currentMarker = "x"; //player 1 starts as 'x', we can offer ability to change to 'o' in  future
 }
