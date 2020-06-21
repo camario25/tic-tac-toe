@@ -1,11 +1,11 @@
 <main class="game-container">
   <h1 class="game__title">Tic Tac Toe</h1>
-  {{#each this.model.players as |player|}}
+  {{#each @model.players as |player|}}
     <p>{{player.name}}</p>
   {{/each}}
 
   <Grid>
-    {{#each this.model.grid as |row|}}
+    {{#each @model.grid as |row|}}
       {{#each row as |square|}}
       {{log square}}
         <div class="grid__item">{{square.marker}}</div>  
