@@ -83,7 +83,11 @@ function stillHasSpaces(grid) {
   }
 }
 
-//Placing marker on the grid
+//Placing marker in the grid
+
+function placeMarker(grid, coordinates, marker) {
+  grid[coordinates[0]][coordinates[1]].marker = marker;
+}
 
 //Taking Turns
 
