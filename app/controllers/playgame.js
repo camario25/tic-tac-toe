@@ -104,6 +104,25 @@ function currentPlayer(marker) {
 //add changes to grid in model
 
 //End Game
+
+function endGame(result) {
+  declareWinner(result); //display winner
+  resetBoard();
+}
+
+//simple alerts for now to show winner
+function declareWinner(result) {
+  if (result === "draw") {
+    alert(`The result is a ${result}`);
+  } else {
+    alert(`The result is ${result} won!`);
+  }
+}
+
+function resetBoard(size) {
+  return createGrid(size);
+}
+
 export default class PlaygameController extends Controller {
   constructor() {
     super(...arguments);
