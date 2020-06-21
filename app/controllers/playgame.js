@@ -89,7 +89,15 @@ function placeMarker(grid, coordinates, marker) {
   grid[coordinates[0]][coordinates[1]].marker = marker;
 }
 
-//Taking Turns
+//Taking Turns, changes currentMarker from x to o or vice verca
+
+function currentPlayer(marker) {
+  if (marker === "x") {
+    return "o";
+  } else if (marker === "o") {
+    return "x";
+  }
+}
 
 //Check if input is valid
 
