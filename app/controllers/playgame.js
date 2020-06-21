@@ -71,6 +71,17 @@ function isWinner(grid) {
 }
 
 //Check if board still has spaces
+function stillHasSpaces(grid) {
+  for (let i = 0; i < grid.length; i++) {
+    for (let j = 0; j < grid[i].length; j++) {
+      if (grid[i][j].marker === "") {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
+}
 
 //Placing marker on the grid
 
