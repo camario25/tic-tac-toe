@@ -19,7 +19,7 @@ import { action, set } from "@ember/object";
 function mapArray(size, counter) {
   const tempArr = [];
   for (let i = 0; i < size; i++) {
-    tempArr[i] = { marker: "x", position: [counter, i] }; //the coordinates to access this position in the grid
+    tempArr[i] = { marker: ".", position: [counter, i] }; //the coordinates to access this position in the grid
   }
   return tempArr;
 }
@@ -160,8 +160,14 @@ export default class PlaygameController extends Controller {
     console.log(marker, position, e);
     // console.log(this.model.grid[0][0].marker);
 
-    // set(this.model.grid[0][0], "marker", "o");
-    // this.model.grid[0][0].marker = "o";
+    set(
+      this.model.grid[position[0]][position[1]],
+      "marker",
+      this.currentMarker
+    );
+    console.log(this.currentMarker);
+    this.currentMarker = currentPlayer(this.currentMarker);
+    console.log(this.currentMarker);
     // console.log(this.model.grid[0][0].marker);
   }
 }

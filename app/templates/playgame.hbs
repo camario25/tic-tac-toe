@@ -10,9 +10,13 @@
     {{#each @model.grid as |row|}}
       {{#each row as |square|}}
       {{!-- {{log square}} --}}
-      <button type="button" class="grid__item" {{on "click" (fn this.getInput square.marker square.position)}}>{{square.marker}}</button> 
-      {{!-- <Square @function={{this.getInput}} @marker={{square.marker}} @onClick{{fn this.getInput square.marker}}>{{square.marker}}</Square> --}}
-        {{!-- <div class="grid__item" {{on "click" this.getInput}}>{{square.marker}}</div>   --}}
+        {{#if (eq square.marker ".")}}
+          <button type="button" class="grid__item" {{on "click" (fn this.getInput square.marker square.position)}}>{{square.marker}}</button> 
+          {{!-- <Square @function={{this.getInput}} @marker={{square.marker}} @onClick{{fn this.getInput square.marker}}>{{square.marker}}</Square> --}}
+            {{!-- <div class="grid__item" {{on "click" this.getInput}}>{{square.marker}}</div>   --}}
+        {{else}}
+          <button type="button" class="grid__item">{{square.marker}}</button>
+        {{/if}}
       {{/each}}
     {{/each}}
   </Grid>
