@@ -1,19 +1,38 @@
 import Controller from "@ember/controller";
-import { action } from "@ember/object";
+import { action, set } from "@ember/object";
 
 // initialize the grid function
-function createGrid(size) {
-  const grid = [];
+// function createGrid(size) {
+//   const grid = [];
+//   const tempArr = [];
+//   let c = 0;
+//   for (let i = 0; i < size; i++) {
+//     tempArr[i] = { marker: "x", position: [i] }; //the coordinates to access this position in the grid
+
+//     for (let j = 0; j < size; j++) {
+//       grid[i] = tempArr;
+//     }
+//   }
+//   return grid;
+// }
+
+function mapArray(size, counter) {
   const tempArr = [];
   for (let i = 0; i < size; i++) {
-    tempArr[i] = { marker: "x" };
-    for (let j = 0; j < size; j++) {
-      grid[i] = tempArr;
-    }
+    tempArr[i] = { marker: "x", position: [counter, i] }; //the coordinates to access this position in the grid
+  }
+  return tempArr;
+}
+
+function createGrid(size) {
+  const grid = [];
+  let c = 0;
+  for (let j = 0; j < size; j++, c++) {
+    grid[j] = mapArray(size, c);
   }
   return grid;
 }
-// const startingGrid = createGrid(3);
+
 //Dertirmine Winner * only for three in a row for now
 
 function isWinner(grid) {
@@ -134,5 +153,15 @@ export default class PlaygameController extends Controller {
   setGrid() {
     console.log("pushed");
     this.set("model.grid", createGrid(3));
+    console.log(this.model.grid);
+  }
+  @action
+  getInput(marker, position, e) {
+    console.log(marker, position, e);
+    // console.log(this.model.grid[0][0].marker);
+
+    // set(this.model.grid[0][0], "marker", "o");
+    // this.model.grid[0][0].marker = "o";
+    // console.log(this.model.grid[0][0].marker);
   }
 }
