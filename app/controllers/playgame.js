@@ -1,5 +1,6 @@
 import Controller from "@ember/controller";
 import { action, set } from "@ember/object";
+import { tracked } from "@glimmer/tracking";
 
 function mapArray(size, counter) {
   const tempArr = [];
@@ -86,12 +87,6 @@ function stillHasSpaces(grid) {
   return false;
 }
 
-//Placing marker in the grid
-
-// function placeMarker(grid, coordinates, marker) {
-//   grid[coordinates[0]][coordinates[1]].marker = marker;
-// }
-
 //Taking Turns, changes currentMarker from x to o or vice verca
 
 function currentPlayer(marker) {
@@ -101,10 +96,6 @@ function currentPlayer(marker) {
     return "x";
   }
 }
-
-//Check if input is valid
-
-//add changes to grid in model
 
 //End Game
 
@@ -132,6 +123,8 @@ export default class PlaygameController extends Controller {
 
   currentMarker = "x"; //player 1 starts as 'x', we can offer ability to change to 'o' in  future
 
+  @tracked result;
+
   @action
   setGrid() {
     this.set("model.grid", createGrid(3));
@@ -146,9 +139,11 @@ export default class PlaygameController extends Controller {
       this.currentMarker
     );
     if (isWinner(this.model.grid)) {
-      console.log(`winner is ${this.currentMarker}`);
+      this.result = `Winner is ${this.currentMarker}!`;
+      console.log(this.result);
     } else if (!stillHasSpaces(this.model.grid)) {
-      console.log("draw");
+      this.result = "Result is a Draw";
+      console.log(this.result);
     } else {
       this.currentMarker = currentPlayer(this.currentMarker);
     }

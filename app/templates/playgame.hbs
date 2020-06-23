@@ -9,11 +9,15 @@
 <section class="grid-container">
     {{#each @model.grid as |row|}}
       {{#each row as |square|}}
-          {{#if (eq square.marker "")}}
-            <button type="button" class="grid__item" {{on "click" (fn this.makeMove square.marker square.position)}}>{{square.marker}}</button> 
+          {{#if this.result}}
+          <div class="grid__item">{{square.marker}}</div>
           {{else}}
-            <button type="button" class="grid__item">{{square.marker}}</button>
-          {{/if}}
+            {{#if (eq square.marker "")}}
+              <button type="button" class="grid__item" {{on "click" (fn this.makeMove square.marker square.position)}}>{{square.marker}}</button> 
+            {{else}}
+              <div class="grid__item">{{square.marker}}</div>
+            {{/if}}
+        {{/if}}
       {{/each}}
     {{/each}}
 </section>
