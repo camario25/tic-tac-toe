@@ -10,7 +10,7 @@
     {{#each @model.grid as |row|}}
       {{#each row as |square|}}
           {{#if (eq square.marker "")}}
-            <button type="button" class="grid__item" {{on "click" (fn this.getInput square.marker square.position)}}>{{square.marker}}</button> 
+            <button type="button" class="grid__item" {{on "click" (fn this.makeMove square.marker square.position)}}>{{square.marker}}</button> 
           {{else}}
             <button type="button" class="grid__item">{{square.marker}}</button>
           {{/if}}

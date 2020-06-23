@@ -80,18 +80,17 @@ function stillHasSpaces(grid) {
     for (let j = 0; j < grid[i].length; j++) {
       if (grid[i][j].marker === "") {
         return true;
-      } else {
-        return false;
       }
     }
   }
+  return false;
 }
 
 //Placing marker in the grid
 
-function placeMarker(grid, coordinates, marker) {
-  grid[coordinates[0]][coordinates[1]].marker = marker;
-}
+// function placeMarker(grid, coordinates, marker) {
+//   grid[coordinates[0]][coordinates[1]].marker = marker;
+// }
 
 //Taking Turns, changes currentMarker from x to o or vice verca
 
@@ -111,7 +110,6 @@ function currentPlayer(marker) {
 
 function endGame(result) {
   declareWinner(result); //display winner
-  resetBoard();
 }
 
 //simple alerts for now to show winner
@@ -136,21 +134,23 @@ export default class PlaygameController extends Controller {
 
   @action
   setGrid() {
-    console.log("pushed");
     this.set("model.grid", createGrid(3));
-    console.log(this.model.grid);
   }
   @action
-  getInput(marker, position, e) {
-    console.log(marker, position, e);
-    // console.log(this.model.grid[0][0].marker);
+  makeMove(marker, position, e) {
+    // console.log(marker, position, e);
+    // this.model.grid.forEach((el) => console.log(el));
     set(
       this.model.grid[position[0]][position[1]],
       "marker",
       this.currentMarker
     );
-    console.log(this.currentMarker);
-    this.currentMarker = currentPlayer(this.currentMarker);
-    console.log(this.currentMarker);
+    if (isWinner(this.model.grid)) {
+      console.log(`winner is ${this.currentMarker}`);
+    } else if (!stillHasSpaces(this.model.grid)) {
+      console.log("draw");
+    } else {
+      this.currentMarker = currentPlayer(this.currentMarker);
+    }
   }
 }
