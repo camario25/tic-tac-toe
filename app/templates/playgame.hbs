@@ -2,7 +2,7 @@
   <h1 class="game__title">Tic Tac Toe</h1>
 
   <form class="form">
-    <h3 class='form__title'>Enter Player Names</h3>
+    <h2 class='form__title'>Enter Player Names</h2>
     <h5 class='form__subtitle'>*player who goes first is selected at random</h5>
     <div class='form__group'>
       <label for="playerA">
@@ -44,7 +44,7 @@
           <div class="grid__item">{{square.marker}}</div>
           {{else}}
             {{#if (eq square.marker "")}}
-              <button type="button" class="grid__item" {{on "click" (fn this.makeMove square.marker square.position)}}>{{square.marker}}</button> 
+              <button type="button" class="grid__item" {{on "click" (fn this.makeMove square.position)}}>{{square.marker}}</button> 
             {{else}}
               <div class="grid__item">{{square.marker}}</div>
             {{/if}}
@@ -54,7 +54,16 @@
 </section>
 
 <section class="end-game-container">
+  <div class="end-game">
+    <h2 class="end-game__title">
+      {{#if this.winner}}
+        {{this.winner}} You Won!
+      {{else if this.draw}}
+        Result is a Draw.
+      {{/if}}
+    </h2>
   <Button @type="button" @function={{this.setGrid}}>Start New Game</Button>
+  </div>
 </section>
 
 </main>

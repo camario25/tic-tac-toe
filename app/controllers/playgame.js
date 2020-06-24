@@ -120,6 +120,13 @@ function getRandomNumber(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
+function getWinnerName(players, marker) {
+  const playerName = players
+    .filter((player) => player.marker === marker)
+    .map((player) => player.name);
+  return playerName.toString();
+}
+
 export default class PlaygameController extends Controller {
   constructor() {
     super(...arguments);
@@ -128,24 +135,24 @@ export default class PlaygameController extends Controller {
   @tracked currentMarker = "x"; //player 1 is x
   @tracked playerA;
   @tracked playerB;
-  @tracked result;
+  @tracked draw;
+  @tracked winner;
 
   @action
   inputPlayerA(e) {
     this.playerA = e.target.value;
-    console.log(this.playerA);
   }
 
   @action
   inputPlayerB(e) {
     this.playerB = e.target.value;
-    console.log(this.playerB);
   }
 
   @action
   submitNames(e) {
     e.preventDefault();
     const randomInt = getRandomNumber(2); //either be 1 or 0;
+    console.log(randomInt);
     if (randomInt < 1) {
       set(this.model.players[0], "name", this.playerA);
       set(this.model.players[1], "name", this.playerB);
@@ -153,6 +160,7 @@ export default class PlaygameController extends Controller {
       set(this.model.players[0], "name", this.playerB);
       set(this.model.players[1], "name", this.playerA);
     }
+    console.log(this.model.players);
   }
 
   @action
@@ -160,20 +168,18 @@ export default class PlaygameController extends Controller {
     this.set("model.grid", createGrid(3));
   }
   @action
-  makeMove(marker, position, e) {
-    // console.log(marker, position, e);
-    // this.model.grid.forEach((el) => console.log(el));
+  makeMove(position) {
     set(
       this.model.grid[position[0]][position[1]],
       "marker",
       this.currentMarker
     );
     if (isWinner(this.model.grid)) {
-      this.result = `Winner is ${this.currentMarker}!`;
-      console.log(this.result);
+      this.winner = getWinnerName(this.model.players, this.currentMarker);
+      console.log(this.winner);
     } else if (!stillHasSpaces(this.model.grid)) {
-      this.result = "Result is a Draw";
-      console.log(this.result);
+      this.draw = true;
+      console.log("draw");
     } else {
       this.currentMarker = currentPlayer(this.currentMarker);
     }
