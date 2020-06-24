@@ -1,4 +1,5 @@
 @import "reset.scss";
+@import "form.scss";
 @import "players.scss";
 @import "grid.scss";
 
@@ -10,7 +11,7 @@
 }
 
 .game__title {
-  color: #6056d6;
+  color: #31298a;
   font-size: 3rem;
   margin: 2rem 1rem;
 }

@@ -7,13 +7,13 @@ export default class PlaygameRoute extends Route {
       players: [
         {
           number: 1,
-          name: "name1",
+          name: "",
           marker: "x",
           wins: 0,
         },
         {
           number: 2,
-          name: "name2",
+          name: "",
           marker: "o",
           wins: 0,
         },

@@ -122,8 +122,28 @@ export default class PlaygameController extends Controller {
   }
 
   currentMarker = "x"; //player 1 starts as 'x', we can offer ability to change to 'o' in  future
-
+  @tracked player1;
+  @tracked player2;
   @tracked result;
+
+  @action
+  inputPlayer1(e) {
+    this.player1 = e.target.value;
+    console.log(this.player1);
+  }
+
+  @action
+  inputPlayer2(e) {
+    this.player2 = e.target.value;
+    console.log(this.player2);
+  }
+
+  @action
+  submitNames(e) {
+    e.preventDefault();
+    set(this.model.players[0], "name", this.player1);
+    set(this.model.players[1], "name", this.player2);
+  }
 
   @action
   setGrid() {

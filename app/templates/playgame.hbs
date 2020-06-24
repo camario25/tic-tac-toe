@@ -1,8 +1,26 @@
 <main class="game-container">
   <h1 class="game__title">Tic Tac Toe</h1>
 
-  <form class="game__form">
- {{!-- <Button @type="submit"></Button> --}}
+  <form class="form">
+    <h3 class='form__title'>Enter Player Names</h3>
+    <div class='form__group'>
+      <label for="player1">
+        Player 1 Name
+      </label>
+      <div class="form__control-wrapper">
+        <Input class="form__control" id="player1" placeholder="Name" @input={{this.inputPlayer1}} autocomplete="off"/>
+      </div>
+    </div>
+    <div class="form__group">
+      <label for="player2">
+        Player 2 Name
+      </label>
+      <div class="form__control-wrapper">
+        <Input class="form__control" id="player2" placeholder="Name" @input={{this.inputPlayer2}} autocomplete="off"/>
+      </div>
+    </div>
+    <button class="button form__button-submit" type="submit" {{on "click" (fn this.submitNames)}}>Play</button>
+ {{!-- <Button @type="submit" @onClick{{fn this.submitNames }}></Button> --}}
   </form>
 
 
@@ -10,8 +28,8 @@
   <section class="players-container">
     {{#each @model.players as |player|}}
     <div class="players">
-      <h2 class="players__title">Player {{player.number}}</h2>
-      <h2 class="players__item--name">{{player.name}} is "{{player.marker}}"</h2>
+      {{!-- <h2 class="players__title">Player {{player.number}}</h2> --}}
+      <h2 class="players__item--name">Player {{player.number}}:  {{player.name}} is "{{player.marker}}"</h2>
     </div>
     {{/each}}
   </section>
