@@ -3,20 +3,21 @@
 
   <form class="form">
     <h3 class='form__title'>Enter Player Names</h3>
+    <h5 class='form__subtitle'>*player who goes first is selected at random</h5>
     <div class='form__group'>
-      <label for="player1">
-        Player 1 Name
+      <label for="playerA">
+        Player Name
       </label>
       <div class="form__control-wrapper">
-        <Input class="form__control" id="player1" placeholder="Name" @input={{this.inputPlayer1}} autocomplete="off"/>
+        <Input class="form__control" id="playerA" placeholder="Name" @input={{this.inputPlayerA}} autocomplete="off"/>
       </div>
     </div>
     <div class="form__group">
-      <label for="player2">
-        Player 2 Name
+      <label for="playerB">
+        Player Name
       </label>
       <div class="form__control-wrapper">
-        <Input class="form__control" id="player2" placeholder="Name" @input={{this.inputPlayer2}} autocomplete="off"/>
+        <Input class="form__control" id="playerB" placeholder="Name" @input={{this.inputPlayerB}} autocomplete="off"/>
       </div>
     </div>
     <button class="button form__button-submit" type="submit" {{on "click" (fn this.submitNames)}}>Play</button>
