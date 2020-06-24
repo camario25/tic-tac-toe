@@ -1,3 +1,6 @@
-<button type="button" class="game__button" {{on "click" @function}}>
-  {{yield}}
-</button>
+{{!-- {{#if (eq @type "button")}} --}}
+  <button type={{@type}} class="game__button" {{on "click" @function}}>
+    {{yield}}
+  </button>
+{{!-- {{/if}}
+{{#if (eq @type "submit")}} --}}

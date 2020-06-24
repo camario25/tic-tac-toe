@@ -6,15 +6,15 @@ export default class PlaygameRoute extends Route {
       grid: [],
       players: [
         {
-          playerNumber: 1,
-          name: "player1",
-          maker: "x",
+          number: 1,
+          name: "name1",
+          marker: "x",
           wins: 0,
         },
         {
-          playerNumber: 2,
-          name: "player2",
-          maker: "o",
+          number: 2,
+          name: "name2",
+          marker: "o",
           wins: 0,
         },
       ],

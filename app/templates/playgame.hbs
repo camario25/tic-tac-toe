@@ -1,10 +1,22 @@
 <main class="game-container">
   <h1 class="game__title">Tic Tac Toe</h1>
-  {{#each @model.players as |player|}}
-    <p>{{player.name}}</p>
-  {{/each}}
 
-  <Button @function={{this.setGrid}}>Start</Button>
+  <form class="game__form">
+ {{!-- <Button @type="submit"></Button> --}}
+  </form>
+
+
+
+  <section class="players-container">
+    {{#each @model.players as |player|}}
+    <div class="players">
+      <h2 class="players__title">Player {{player.number}}</h2>
+      <h2 class="players__item--name">{{player.name}} is "{{player.marker}}"</h2>
+    </div>
+    {{/each}}
+  </section>
+
+  
 
 <section class="grid-container">
     {{#each @model.grid as |row|}}
@@ -20,6 +32,10 @@
         {{/if}}
       {{/each}}
     {{/each}}
+</section>
+
+<section class="end-game-container">
+  <Button @type="button" @function={{this.setGrid}}>Start New Game</Button>
 </section>
 
 </main>

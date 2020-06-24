@@ -1,0 +1,12 @@
+.players-container {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 1rem;
+  .players {
+    color: #31298a;
+    font-size: 2rem;
+    &__item--name {
+      margin: 0.75rem;
+    }
+  }
+}
