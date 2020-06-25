@@ -27,9 +27,9 @@
     }
   }
   &__button-submit {
+    overflow: hidden;
     margin-top: 0.75rem;
     font-size: 2rem;
-    height: 2rem;
     width: 9rem;
     border-radius: 0.25rem;
     background-color: #31298a;

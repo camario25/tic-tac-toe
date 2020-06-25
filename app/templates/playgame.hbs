@@ -20,50 +20,67 @@
         <Input class="form__control" id="playerB" placeholder="Name" @input={{this.inputPlayerB}} autocomplete="off"/>
       </div>
     </div>
-    <button class="button form__button-submit" type="submit" {{on "click" (fn this.submitNames)}}>Play</button>
- {{!-- <Button @type="submit" @onClick{{fn this.submitNames }}></Button> --}}
+    <button class="form__button-submit" type="button" {{on "click" (fn this.newGame)}}>Play</button>
+ {{!-- <Button @type="submit" @onClick{{fn this.newGame }}></Button> --}}
   </form>
 
 
 
   <section class="players-container">
+    <div class="players__section">
     {{#each @model.players as |player|}}
-    <div class="players">
+    <div class="players__section">
+      
       {{!-- <h2 class="players__title">Player {{player.number}}</h2> --}}
-      <h2 class="players__item--name">Player {{player.number}}:  {{player.name}} is "{{player.marker}}"</h2>
+      <h2 class="players__title">{{player.name}} is "{{player.marker}}"</h2>
     </div>
     {{/each}}
+    </div>
+    <div class="players__section">
+      <h2 class="players__title">
+        {{this.currentName}}'s Turn
+      </h2>
+    </div>
   </section>
 
-  
-
-<section class="grid-container">
-    {{#each @model.grid as |row|}}
-      {{#each row as |square|}}
-          {{#if this.result}}
-          <div class="grid__item">{{square.marker}}</div>
-          {{else}}
-            {{#if (eq square.marker "")}}
-              <button type="button" class="grid__item" {{on "click" (fn this.makeMove square.position)}}>{{square.marker}}</button> 
-            {{else}}
-              <div class="grid__item">{{square.marker}}</div>
-            {{/if}}
+  <section class="game__section">
+    <div class="end-modal">
+      <h2 class="end-modal__title">
+        {{#if this.winner}}
+          {{this.winner}} You Won!
+        {{else if this.draw}}
+          Result is a Draw
         {{/if}}
-      {{/each}}
-    {{/each}}
-</section>
+      </h2>
+      <div class="end-modal__section">
+        <h3 class="end-modal-section__title">
+          Play Again
+        </h3>
+        <div class="end-modal__buttons-wrapper">
+          <Button @class="end-modal__button end-modal__button--same-players" @type="button" @function={{this.newGame}}>Same Players</Button>
+          <p class="end-modal__text">OR</p>
+          <Button @class="end-modal__button end-modal__button--new-players" @type="button" @function={{this.setGrid}}>New Players</Button>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<section class="end-game-container">
-  <div class="end-game">
-    <h2 class="end-game__title">
-      {{#if this.winner}}
-        {{this.winner}} You Won!
-      {{else if this.draw}}
-        Result is a Draw.
-      {{/if}}
-    </h2>
-  <Button @type="button" @function={{this.setGrid}}>Start New Game</Button>
-  </div>
-</section>
+  <section class="grid-container">
+      {{#each @model.grid as |row|}}
+        {{#each row as |square|}}
+            {{#if this.winner}}
+            <div class="grid__item">{{square.marker}}</div>
+            {{else}}
+              {{#if (eq square.marker "")}}
+                <button type="button" class="grid__item" {{on "click" (fn this.makeMove square.position)}}>{{square.marker}}</button> 
+              {{else}}
+                <div class="grid__item">{{square.marker}}</div>
+              {{/if}}
+          {{/if}}
+        {{/each}}
+      {{/each}}
+  </section>
+
+
 
 </main>

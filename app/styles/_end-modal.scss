@@ -1,0 +1,33 @@
+.end-modal {
+  margin: 2rem;
+  &__title {
+    margin: 1.5rem;
+    font-size: 2.5rem;
+    color: #31298a;
+  }
+  &__section {
+    margin: 1rem;
+  }
+  &-section__title {
+    margin: 1rem;
+    font-size: 2.5rem;
+    color: #31298a;
+  }
+  &__buttons-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  &__button {
+    margin: 0.75rem;
+    height: 2rem;
+    width: 9rem;
+    border-radius: 0.25rem;
+    background-color: #31298a;
+    border-color: #8a80ff;
+    color: #fff;
+  }
+  &__text {
+    color: #8a80ff;
+  }
+}

@@ -1,11 +1,11 @@
 .players-container {
-  display: flex;
-  justify-content: space-evenly;
   margin: 1rem;
-  .players {
+  .players__section {
+    display: flex;
+    justify-content: space-evenly;
     color: #31298a;
     font-size: 2rem;
-    &__item--name {
+    .players__title {
       margin: 0.75rem;
     }
   }

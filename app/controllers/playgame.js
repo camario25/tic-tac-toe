@@ -89,7 +89,7 @@ function stillHasSpaces(grid) {
 
 //Taking Turns, changes currentMarker from x to o or vice verca
 
-function currentPlayer(marker) {
+function getCurrentMarker(marker) {
   if (marker === "x") {
     return "o";
   } else if (marker === "o") {
@@ -97,23 +97,12 @@ function currentPlayer(marker) {
   }
 }
 
-//End Game
-
-function endGame(result) {
-  declareWinner(result); //display winner
-}
-
-//simple alerts for now to show winner
-function declareWinner(result) {
-  if (result === "draw") {
-    alert(`The result is a ${result}`);
-  } else {
-    alert(`The result is ${result} won!`);
+function getCurrentName(currentName, playerA, playerB) {
+  if (playerA === currentName) {
+    return playerB;
+  } else if (playerB === currentName) {
+    return playerA;
   }
-}
-
-function resetBoard(size) {
-  return createGrid(size);
 }
 
 function getRandomNumber(max) {
@@ -132,11 +121,16 @@ export default class PlaygameController extends Controller {
     super(...arguments);
   }
 
-  @tracked currentMarker = "x"; //player 1 is x
+  @tracked currentMarker;
+  @tracked currentName;
   @tracked playerA;
   @tracked playerB;
   @tracked draw;
   @tracked winner;
+
+  setGrid(size) {
+    this.set("model.grid", createGrid(size));
+  }
 
   @action
   inputPlayerA(e) {
@@ -149,24 +143,28 @@ export default class PlaygameController extends Controller {
   }
 
   @action
-  submitNames(e) {
-    e.preventDefault();
+  newGame() {
+    this.winner = null;
+    this.draw = null;
+    this.currentMarker = "x"; // first move is x
     const randomInt = getRandomNumber(2); //either be 1 or 0;
-    console.log(randomInt);
     if (randomInt < 1) {
       set(this.model.players[0], "name", this.playerA);
+      this.currentName = this.playerA;
       set(this.model.players[1], "name", this.playerB);
     } else {
       set(this.model.players[0], "name", this.playerB);
+      this.currentName = this.playerB;
       set(this.model.players[1], "name", this.playerA);
     }
-    console.log(this.model.players);
+    this.setGrid(3);
   }
 
   @action
-  setGrid() {
-    this.set("model.grid", createGrid(3));
+  newPlayers() {
+    //show submit player name section
   }
+
   @action
   makeMove(position) {
     set(
@@ -176,12 +174,16 @@ export default class PlaygameController extends Controller {
     );
     if (isWinner(this.model.grid)) {
       this.winner = getWinnerName(this.model.players, this.currentMarker);
-      console.log(this.winner);
     } else if (!stillHasSpaces(this.model.grid)) {
       this.draw = true;
-      console.log("draw");
     } else {
-      this.currentMarker = currentPlayer(this.currentMarker);
+      this.currentMarker = getCurrentMarker(this.currentMarker);
+      this.currentName = getCurrentName(
+        this.currentName,
+        this.playerA,
+        this.playerB
+      );
+      console.log(this.currentName);
     }
   }
 }
