@@ -119,8 +119,9 @@ function getWinnerName(players, marker) {
 export default class PlaygameController extends Controller {
   constructor() {
     super(...arguments);
+    this.userView = "playerNames";
   }
-
+  @tracked userView;
   @tracked currentMarker;
   @tracked currentName;
   @tracked playerA;
@@ -144,6 +145,7 @@ export default class PlaygameController extends Controller {
 
   @action
   newGame() {
+    this.userView = "playingGame";
     this.winner = null;
     this.draw = null;
     this.currentMarker = "x"; // first move is x
@@ -162,7 +164,7 @@ export default class PlaygameController extends Controller {
 
   @action
   newPlayers() {
-    //show submit player name section
+    this.userView = "playerNames";
   }
 
   @action
@@ -174,8 +176,10 @@ export default class PlaygameController extends Controller {
     );
     if (isWinner(this.model.grid)) {
       this.winner = getWinnerName(this.model.players, this.currentMarker);
+      this.userView = "endGame";
     } else if (!stillHasSpaces(this.model.grid)) {
       this.draw = true;
+      this.userView = "endGame";
     } else {
       this.currentMarker = getCurrentMarker(this.currentMarker);
       this.currentName = getCurrentName(
@@ -183,7 +187,6 @@ export default class PlaygameController extends Controller {
         this.playerA,
         this.playerB
       );
-      console.log(this.currentName);
     }
   }
 }
