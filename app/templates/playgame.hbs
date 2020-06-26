@@ -4,7 +4,7 @@
 {{#if (eq this.userView "playerNames")}}
   <form class="form">
     <h2 class='form__title'>Enter Player Names</h2>
-    <h5 class='form__subtitle'>*player who goes first is selected at random</h5>
+    <h5 class='form__subtitle'>* player who goes first is selected at random</h5>
     <div class='form__group'>
       <label for="playerA">
         Player Name
@@ -21,18 +21,19 @@
         <Input class="form__control" id="playerB" placeholder="Name" @input={{this.inputPlayerB}} autocomplete="off"/>
       </div>
     </div>
-    <button class="form__button-submit" type="button" {{on "click" (fn this.newGame)}}>Play</button>
+    <button class="form__button-submit" type="submit" {{on "click" (fn this.newGame)}}>Play</button>
  {{!-- <Button @type="submit" @onClick{{fn this.newGame }}></Button> --}}
   </form>
 
 {{else if (eq this.userView "playingGame")}}
   <section class="players-container">
-    <div class="players__section">
+    <div class="players__section-wrapper">
     {{#each @model.players as |player|}}
     <div class="players__section">
       
-      {{!-- <h2 class="players__title">Player {{player.number}}</h2> --}}
+      {{!-- <h2 class="players__title">Player {{player.id}}</h2> --}}
       <h2 class="players__title">{{player.name}} is "{{player.marker}}"</h2>
+      <p class="players__text">Wins: {{player.wins}}</p>
     </div>
     {{/each}}
     </div>
@@ -40,6 +41,7 @@
       <h2 class="players__title">
         {{this.currentName}}'s Turn
       </h2>
+      <h3 class="players__subtitle">{{this.currentMarker}}</h3>
     </div>
   </section>
 
