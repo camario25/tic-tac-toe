@@ -1,6 +1,9 @@
-{{!-- {{#if (eq @type "button")}} --}}
+{{#if (eq @class "grid__item")}}
+  <button type={{@type}}  class={{@class}} {{on "click" (fn @function @param)}}>
+    {{yield}}
+  </button>
+  {{else}}
   <button type={{@type}}  class={{@class}} {{on "click" @function}}>
     {{yield}}
   </button>
-{{!-- {{/if}}
-{{#if (eq @type "submit")}} --}}
+{{/if}}

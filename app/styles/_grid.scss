@@ -3,13 +3,13 @@
   height: 27rem;
   margin: 1rem auto;
   background-color: #637ff7;
-  color: #fff;
+  color: $white;
   border: 0.375rem solid #6056d6;
   border-radius: 0.625rem;
   display: grid;
   grid-template: repeat(3, 1fr) / repeat(3, 1fr);
   .grid__item {
-    color: #fff;
+    color: $white;
     background-color: #637ff7;
     border: 0.375rem solid #6056d6;
     border-radius: 0.125rem;

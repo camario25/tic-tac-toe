@@ -2,12 +2,12 @@
   margin: 1rem;
   &__title {
     margin: 1rem 1rem 0.5rem 1rem;
-    color: #31298a;
+    color: $dark-purple;
     font-size: 2rem;
   }
   &__subtitle {
     margin-bottom: 2rem;
-    color: #8a80ff;
+    color: $light-purple;
   }
   &__group {
     font-size: 1.5rem;
@@ -20,20 +20,19 @@
     height: 1.5rem;
     border-radius: 0.25rem;
     background-color: #6056d6;
-    border-color: #8a80ff;
-    color: #fff;
+    border-color: $light-purple;
+    color: $white;
     &::placeholder {
-      color: #fff;
+      color: $white;
     }
   }
   &__button-submit {
-    overflow: hidden;
     margin-top: 0.75rem;
     font-size: 2rem;
     width: 9rem;
     border-radius: 0.25rem;
     background-color: #31298a;
     border-color: #8a80ff;
-    color: #fff;
+    color: $white;
   }
 }

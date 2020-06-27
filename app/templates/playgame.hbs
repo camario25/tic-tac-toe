@@ -2,7 +2,7 @@
   <h1 class="game__title">Tic Tac Toe</h1>
 
 {{#if (eq this.userView "playerNames")}}
-  <form class="form">
+  <Form>
     <h2 class='form__title'>Enter Player Names</h2>
     <h5 class='form__subtitle'>* player who goes first is selected at random</h5>
     <div class='form__group'>
@@ -21,17 +21,14 @@
         <Input class="form__control" id="playerB" placeholder="Name" @input={{this.inputPlayerB}} autocomplete="off"/>
       </div>
     </div>
-    <button class="form__button-submit" type="submit" {{on "click" (fn this.newGame)}}>Play</button>
- {{!-- <Button @type="submit" @onClick{{fn this.newGame }}></Button> --}}
-  </form>
+    <Button @type="submit" @class="form__button-submit" @function={{this.newGame }}>Play</Button>
+  </Form>
 
 {{else if (eq this.userView "playingGame")}}
-  <section class="players-container">
+  <GameSection @class="players-container">
     <div class="players__section-wrapper">
     {{#each @model.players as |player|}}
     <div class="players__section">
-      
-      {{!-- <h2 class="players__title">Player {{player.id}}</h2> --}}
       <h2 class="players__title">{{player.name}} is "{{player.marker}}"</h2>
       <p class="players__text">Wins: {{player.wins}}</p>
     </div>
@@ -43,26 +40,26 @@
       </h2>
       <h3 class="players__subtitle">{{this.currentMarker}}</h3>
     </div>
-  </section>
+  </GameSection>
 
-    <section class="grid-container">
-      {{#each @model.grid as |row|}}
-        {{#each row as |square|}}
-            {{#if this.winner}}
-            <div class="grid__item">{{square.marker}}</div>
+  <GameSection @class="grid-container">
+    {{#each @model.grid as |row|}}
+      {{#each row as |square|}}
+          {{#if this.winner}}
+          <div class="grid__item">{{square.marker}}</div>
+          {{else}}
+            {{#if (eq square.marker "")}}
+              <Button @type="button" @class="grid__item" @function={{this.makeMove}} @param={{square.position}}>{{square.marker}}</Button>
             {{else}}
-              {{#if (eq square.marker "")}}
-                <button type="button" class="grid__item" {{on "click" (fn this.makeMove square.position)}}>{{square.marker}}</button> 
-              {{else}}
-                <div class="grid__item">{{square.marker}}</div>
-              {{/if}}
-          {{/if}}
-        {{/each}}
+              <div class="grid__item">{{square.marker}}</div>
+            {{/if}}
+        {{/if}}
       {{/each}}
-  </section>
+    {{/each}}
+  </GameSection>
 
 {{else if (eq this.userView "endGame")}}
-  <section class="game__section">
+  <GameSection @class="end-modal-conatainer">
     <div class="end-modal">
       <h2 class="end-modal__title">
         {{#if this.winner}}
@@ -82,23 +79,17 @@
         </div>
       </div>
     </div>
-  </section>
+  </GameSection>
 
-    <section class="grid-container">
+    <GameSection @class="grid-container">
       {{#each @model.grid as |row|}}
         {{#each row as |square|}}
-            {{#if this.winner}}
+          {{#if (or this.winner this.draw)}}
             <div class="grid__item">{{square.marker}}</div>
-            {{else}}
-              {{#if (eq square.marker "")}}
-                <button type="button" class="grid__item" {{on "click" (fn this.makeMove square.position)}}>{{square.marker}}</button> 
-              {{else}}
-                <div class="grid__item">{{square.marker}}</div>
-              {{/if}}
           {{/if}}
         {{/each}}
       {{/each}}
-  </section>
-{{/if}}
+    </GameSection>
+  {{/if}}
 
 </main>
