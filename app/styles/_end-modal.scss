@@ -25,7 +25,10 @@
     border-radius: 0.25rem;
     background-color: #31298a;
     border-color: #8a80ff;
-    color: #fff;
+    color: $white;
+    @media only screen and (max-width: 64rem) {
+      height: 3rem;
+    }
   }
   &__text {
     color: #8a80ff;

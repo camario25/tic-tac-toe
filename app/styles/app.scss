@@ -16,4 +16,7 @@
   color: $dark-purple;
   font-size: $h1-font-size;
   margin: $h1-margin;
+  @media only screen and (max-width: 24rem) {
+    margin: 0.5rem 1rem;
+  }
 }

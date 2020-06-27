@@ -59,6 +59,16 @@
   </GameSection>
 
 {{else if (eq this.userView "endGame")}}
+  <GameSection @class="players-container">
+    <div class="players__section-wrapper">
+    {{#each @model.players as |player|}}
+    <div class="players__section">
+      <h2 class="players__title">{{player.name}}</h2>
+      <p class="players__text">Wins: {{player.wins}}</p>
+    </div>
+    {{/each}}
+    </div>
+  </GameSection>
   <GameSection @class="end-modal-conatainer">
     <div class="end-modal">
       <h2 class="end-modal__title">

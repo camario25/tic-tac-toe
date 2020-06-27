@@ -8,15 +8,23 @@
   border-radius: 0.625rem;
   display: grid;
   grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+  @media only screen and (max-width: 29rem) {
+    width: 18rem;
+    height: 18rem;
+    margin-top: 0.25rem;
+  }
   .grid__item {
     color: $white;
     background-color: #637ff7;
     border: 0.375rem solid #6056d6;
     border-radius: 0.125rem;
     font-weight: bold;
-    font-size: 6em;
+    font-size: 6rem;
     display: flex;
     justify-content: center;
     align-items: center;
+    @media only screen and (max-width: 29rem) {
+      font-size: 5rem;
+    }
   }
 }

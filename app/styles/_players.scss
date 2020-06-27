@@ -1,5 +1,8 @@
 .players-container {
   margin: 1rem;
+  @media only screen and (max-width: 29rem) {
+    margin-bottom: 0.25rem;
+  }
   .players__section-wrapper {
     display: flex;
     justify-content: space-evenly;
@@ -17,5 +20,8 @@
   }
   .players__subtitle {
     font-size: 4rem;
+    @media only screen and (max-width: 29rem) {
+      font-size: 3rem;
+    }
   }
 }
