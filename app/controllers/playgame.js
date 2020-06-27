@@ -2,21 +2,28 @@ import Controller from "@ember/controller";
 import { action, set } from "@ember/object";
 import { tracked } from "@glimmer/tracking";
 
-function mapArray(size, counter) {
-  const tempArr = [];
-  for (let i = 0; i < size; i++) {
-    tempArr[i] = { marker: "", position: [counter, i] }; //the coordinates to access this position in the grid
-  }
-  return tempArr;
+/*This function returns an array that represents a row, eventually used in the grid
+@param {Number} size The length of one row in the grid, for 3x3 grid, size is 3
+@param {Number} counter This number represents the eventual position of the row in the grid, it increments at a different rate than the loop hence why is used later in createGrid(size);
+@return {Array} The array of objects representing "squares" in a row.  Each array is a row in the grid.
+*/
+function createRow(size, counter) {
+  return [...new Array(size)].map((el, i) => {
+    return { marker: "", position: [counter, i] };
+  });
 }
 
+/*This function creates a grid from rows made by createRow(size, counter);
+@param {Number} size The height of the grid, or how many rows in the grid.  For example a 3x3 grid, size would be 3
+@return {Array} Returns a nested Array with however many arrays inside as the number size
+*/
+
 function createGrid(size) {
-  const grid = [];
-  let c = 0;
-  for (let j = 0; j < size; j++, c++) {
-    grid[j] = mapArray(size, c);
-  }
-  return grid;
+  let c = -1;
+  return [...new Array(size)].map(() => {
+    c++;
+    return createRow(size, c);
+  });
 }
 
 //Dertirmine Winner * only for three in a row for now
@@ -76,41 +83,27 @@ function isWinner(grid) {
 }
 
 //Check if board still has spaces
+
 function stillHasSpaces(grid) {
-  for (let i = 0; i < grid.length; i++) {
-    for (let j = 0; j < grid[i].length; j++) {
-      if (grid[i][j].marker === "") {
-        return true;
-      }
-    }
-  }
-  return false;
+  return grid
+    .map((row) => row)
+    .some((row) => {
+      return row.some((square) => square.marker === "");
+    });
 }
 
 //Taking Turns, changes currentMarker from x to o or vice verca
 
 function getCurrentMarker(marker) {
-  if (marker === "x") {
-    return "o";
-  } else if (marker === "o") {
-    return "x";
-  }
+  return marker === "x" ? "o" : "x";
 }
 
 function getCurrentName(currentName, playerA, playerB) {
-  if (playerA === currentName) {
-    return playerB;
-  } else if (playerB === currentName) {
-    return playerA;
-  }
+  return currentName === playerA ? playerB : playerA;
 }
 
 function selectFirstPlayer() {
-  if (Math.random() < 0.5) {
-    return "x";
-  } else {
-    return "o";
-  }
+  return Math.random() < 0.5 ? "x" : "o";
 }
 
 export default class PlaygameController extends Controller {
