@@ -1,115 +1,19 @@
 import Controller from "@ember/controller";
 import { action, set } from "@ember/object";
 import { tracked } from "@glimmer/tracking";
-
-/*This function returns an array that represents a row, eventually used in the grid
-@param {Number} size The length of one row in the grid, for 3x3 grid, size is 3
-@param {Number} counter This number represents the eventual position of the row in the grid, it increments at a different rate than the loop hence why is used later in createGrid(size);
-@return {Array} The array of objects representing "squares" in a row.  Each array is a row in the grid.
-*/
-function createRow(size, counter) {
-  return [...new Array(size)].map((el, i) => {
-    return { marker: "", position: [counter, i] };
-  });
-}
-
-/*This function creates a grid from rows made by createRow(size, counter);
-@param {Number} size The height of the grid, or how many rows in the grid.  For example a 3x3 grid, size would be 3
-@return {Array} Returns a nested Array with however many arrays inside as the number size
-*/
-
-function createGrid(size) {
-  let c = -1;
-  return [...new Array(size)].map(() => {
-    c++;
-    return createRow(size, c);
-  });
-}
-
-//Dertirmine Winner * only for three in a row for now
-
-function isWinner(grid) {
-  if (
-    grid[0][0].marker !== "" &&
-    grid[0][0].marker === grid[0][1].marker &&
-    grid[0][1].marker === grid[0][2].marker
-  ) {
-    return true;
-  } else if (
-    grid[1][0].marker !== "" &&
-    grid[1][0].marker === grid[1][1].marker &&
-    grid[1][1].marker === grid[1][2].marker
-  ) {
-    return true;
-  } else if (
-    grid[2][0].marker !== "" &&
-    grid[2][0].marker === grid[2][1].marker &&
-    grid[2][1].marker === grid[2][2].marker
-  ) {
-    return true;
-  } else if (
-    grid[0][0].marker !== "" &&
-    grid[0][0].marker === grid[1][0].marker &&
-    grid[1][0].marker === grid[2][0].marker
-  ) {
-    return true;
-  } else if (
-    grid[0][1].marker !== "" &&
-    grid[0][1].marker === grid[1][1].marker &&
-    grid[1][1].marker === grid[2][1].marker
-  ) {
-    return true;
-  } else if (
-    grid[0][2].marker !== "" &&
-    grid[0][2].marker === grid[1][2].marker &&
-    grid[1][2].marker === grid[2][2].marker
-  ) {
-    return true;
-  } else if (
-    grid[0][0].marker !== "" &&
-    grid[0][0].marker === grid[1][1].marker &&
-    grid[1][1].marker === grid[2][2].marker
-  ) {
-    return true;
-  } else if (
-    grid[0][2].marker !== "" &&
-    grid[0][2].marker === grid[1][1].marker &&
-    grid[1][1].marker === grid[2][0].marker
-  ) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
-//Check if board still has spaces
-
-function stillHasSpaces(grid) {
-  return grid
-    .map((row) => row)
-    .some((row) => {
-      return row.some((square) => square.marker === "");
-    });
-}
-
-//Taking Turns, changes currentMarker from x to o or vice verca
-
-function getCurrentMarker(marker) {
-  return marker === "x" ? "o" : "x";
-}
-
-function getCurrentName(currentName, playerA, playerB) {
-  return currentName === playerA ? playerB : playerA;
-}
-
-function selectFirstPlayer() {
-  return Math.random() < 0.5 ? "x" : "o";
-}
+import {
+  createGrid,
+  isWinner,
+  stillHasSpaces,
+  getCurrentMarker,
+  getCurrentName,
+  selectFirstPlayer,
+} from "../utils/tictactoe";
 
 export default class PlaygameController extends Controller {
   constructor() {
     super(...arguments);
-    this.userView = "playerNames";
+    this.userView = "playerNames"; //game starts with asking for player names
   }
 
   @tracked userView;
@@ -177,10 +81,19 @@ export default class PlaygameController extends Controller {
     );
     if (isWinner(this.model.grid)) {
       this.winner = this.currentName;
+      const WIN_INCREMENT = 1;
       if (this.model.players[0].name === this.winner) {
-        set(this.model.players[0], "wins", this.model.players[0].wins + 1);
+        set(
+          this.model.players[0],
+          "wins",
+          this.model.players[0].wins + WIN_INCREMENT
+        );
       } else if (this.model.players[1].name === this.winner) {
-        set(this.model.players[1], "wins", this.model.players[1].wins + 1);
+        set(
+          this.model.players[1],
+          "wins",
+          this.model.players[1].wins + WIN_INCREMENT
+        );
       }
       this.userView = "endGame";
     } else if (!stillHasSpaces(this.model.grid)) {

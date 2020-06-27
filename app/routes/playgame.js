@@ -8,13 +8,13 @@ export default class PlaygameRoute extends Route {
         {
           id: 1,
           name: "",
-          marker: "x",
+          marker: "", //"x" or "o"
           wins: 0,
         },
         {
           id: 2,
           name: "",
-          marker: "o",
+          marker: "", //"x" or "o"
           wins: 0,
         },
       ],
