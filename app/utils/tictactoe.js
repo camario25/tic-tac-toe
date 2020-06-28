@@ -1,4 +1,12 @@
 /**
+ * The purpose of this id is for screen readers to be able to read the square to
+ * blind people using aria-labels My game logic currently uses the position
+ * attribute (an array of two integers) to locate and mutate the value of the
+ * marker attribute from "" to "x" or "o"
+ */
+let squareId = 1;
+
+/**
  * Returns an array that represents a row, eventually used in the grid
  * @param {Number} size The length of one row in the grid, for 3x3 grid, size is
  * 3
@@ -10,7 +18,7 @@
  */
 function createRow(size, counter) {
   return [...new Array(size)].map((el, i) => {
-    return { marker: "", position: [counter, i] };
+    return { id: squareId++, marker: "", position: [counter, i] };
   });
 }
 
