@@ -49,14 +49,15 @@
           <div class="grid__item">{{square.marker}}</div>
           {{else}}
             {{#if (eq square.marker "")}}
-              <Button @type="button" @class="grid__item" @function={{this.makeMove}} @param={{square.position}}>{{square.marker}}</Button>
+              <Button @type="button" @usage="grid" @class={{if (eq this.currentMarker "x") "grid__item grid__item--unmarked-x" "grid__item grid__item--unmarked-o"}} @clickFunction={{this.makeMove}} @hoverInFunction={{this.hoverInMarker}} @hoverOutFunction={{this.hoverOutMarker}} @param={{square.position}}>{{square.marker}}</Button>
             {{else}}
-              <div class="grid__item">{{square.marker}}</div>
+              <div class="grid__item grid__item--marked">{{square.marker}}</div>
             {{/if}}
         {{/if}}
       {{/each}}
     {{/each}}
   </GameSection>
+  <Footer />
 
 {{else if (eq this.userView "endGame")}}
   <GameSection @class="players-container">
@@ -100,6 +101,7 @@
         {{/each}}
       {{/each}}
     </GameSection>
+    <Footer />
   {{/if}}
 
 </main>

@@ -26,5 +26,17 @@
     @media only screen and (max-width: 29rem) {
       font-size: 5rem;
     }
+    &--unmarked-x:hover {
+      border-color: $dark-purple;
+      background-color: #a09bdd;
+      cursor: url(/assets/images/X-Cursor.cur), pointer;
+      caret-color: $white;
+    }
+    &--unmarked-o:hover {
+      border-color: $dark-purple;
+      background-color: #a09bdd;
+      cursor: url(/assets/images/O-Cursor.cur), pointer;
+      caret-color: $white;
+    }
   }
 }

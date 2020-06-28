@@ -1,0 +1,15 @@
+.game-footer__menu {
+  margin-top: 4rem;
+  .game-footer-menu__item {
+    margin: 1.5rem;
+    font-size: 2rem;
+    text-decoration: none;
+    color: $dark-purple;
+    &:hover {
+      color: #6056d6;
+    }
+  }
+  .game-footer-menu-item__icon {
+    margin: 0.5rem;
+  }
+}

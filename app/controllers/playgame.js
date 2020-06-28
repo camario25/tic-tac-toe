@@ -73,6 +73,16 @@ export default class PlaygameController extends Controller {
   }
 
   @action
+  hoverInMarker(position) {
+    console.log("in");
+  }
+
+  @action
+  hoverOutMarker(position) {
+    console.log("out");
+  }
+
+  @action
   makeMove(position) {
     set(
       this.model.grid[position[0]][position[1]],

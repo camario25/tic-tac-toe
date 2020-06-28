@@ -1,5 +1,5 @@
-{{#if (eq @class "grid__item")}}
-  <button type={{@type}}  class={{@class}} {{on "click" (fn @function @param)}}>
+{{#if (eq @usage "grid")}}
+  <button type={{@type}}  class={{@class}} {{on "click" (fn @clickFunction @param)}} {{on "mouseenter" (fn @hoverInFunction @param)}} {{on "mouseleave" (fn @hoverOutFunction @param)}}>
     {{yield}}
   </button>
   {{else}}
