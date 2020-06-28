@@ -1,5 +1,5 @@
 {{#if (eq @usage "grid")}}
-  <button type={{@type}}  class={{@class}} {{on "click" (fn @clickFunction @param)}} {{on "mouseenter" (fn @hoverInFunction @param)}} {{on "mouseleave" (fn @hoverOutFunction @param)}}>
+  <button type={{@type}} class={{@class}} {{on "click" (fn @clickFunction @param)}} aria-label={{@aria-label}}>
     {{yield}}
   </button>
   {{else}}

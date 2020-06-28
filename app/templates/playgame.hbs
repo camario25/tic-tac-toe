@@ -49,9 +49,9 @@
           <div class="grid__item">{{square.marker}}</div>
           {{else}}
             {{#if (eq square.marker "")}}
-              <Button @type="button" @usage="grid" @class={{if (eq this.currentMarker "x") "grid__item grid__item--unmarked-x" "grid__item grid__item--unmarked-o"}} @clickFunction={{this.makeMove}} @hoverInFunction={{this.hoverInMarker}} @hoverOutFunction={{this.hoverOutMarker}} @param={{square.position}}>{{square.marker}}</Button>
+              <Button @type="button" @usage="grid" @class={{if (eq this.currentMarker "x") "grid__item grid__item--unmarked-x" "grid__item grid__item--unmarked-o"}} @clickFunction={{this.makeMove}} @param={{square.position}} @aria-label="Free Space"></Button>
             {{else}}
-              <div class="grid__item grid__item--marked">{{square.marker}}</div>
+              <div class="grid__item grid__item--marked" tabindex="0" role="button" aria-pressed="true">{{square.marker}}</div>
             {{/if}}
         {{/if}}
       {{/each}}
