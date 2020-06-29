@@ -51,23 +51,25 @@ function createRow(size, rowPosition) {
  * Creates a grid from rows made by createRow(size, rowPosition);
  * @param {Number} size The height of the grid, or how many rows in the grid.
  * For example a 3x3 grid, size would be 3
- * @returns {Array.<Array.<Object>>} Returns a nested Array with however many
+ * @returns {Array.<Array.<Object>>} Returns newGrid a nested Array with however many
  * arrays inside as the number size. The quantity of objects inside each array
  * also matches size.
  */
 function createGrid(size) {
   /**
-   * will create a new array filled with the arrays return by createRow
+   * will create a new array filled with the arrays (newGrid) returned by createRow
    * @param {Number} rowPosition index representing the row position of the
    * objects made by createRow The rowPosition index begins at -1 because we
    * need to iterate over it in the map
    * and it will not iterate if we place it after the return statement
    */
   let rowPosition = -1;
-  return [...new Array(size)].map(() => {
+  const newGrid = [...new Array(size)].map(() => {
     rowPosition++;
     return createRow(size, rowPosition);
   });
+  squareId = 1; //reset id so that we only have id's 1-9 for aria-label;
+  return newGrid;
 }
 
 /**
