@@ -101,15 +101,12 @@ export default class PlaygameController extends Controller {
   /**
    * Action fired when user places a marker on the grid Each object representing
    * a square on the grid was assinged an attribute position.
-   * @param {Array.<Number>} position an array length of 2 each a number, either
-   * 0 or 1.  Essentially this is the ID of the square, if we didn't use
-   * position another method is passing some unique id to identify the square.
-   * In which case I would need some sort of map from id to position in array.
-   * Position is array of two numbers that represent the position of the square
-   * in the grid using index position. This allows us to take that information
-   * on the click event and pass it the function to change the value of that
-   * position in the model. The model is only accessed using index position and
-   * that is why we are doing this.
+   * @param {Array.<Number>} position an array length of 2 each is a number,
+   * either 0,1,2.  Position is array of two numbers that represent the position
+   * of the square in the grid using index position. This allows us to take that
+   * information on the click event and pass it the function to change the value
+   * of that position in the model. The model is only accessed using index
+   * position and that is why we are doing this.
    */
   @action
   makeMove(position) {

@@ -96,7 +96,11 @@
       {{#each @model.grid as |row|}}
         {{#each row as |square|}}
           {{#if (or this.winner this.draw)}}
-            <div class="grid__item">{{square.marker}}</div>
+            {{#if square.marker}}
+              <div class="grid__item grid__item--marked" tabindex="0" role="button" aria-pressed="true" aria-label="Square {{square.id}} has an {{square.marker}}">{{square.marker}}</div>
+            {{else}}
+              <div class="grid__item grid__item--marked" tabindex="0" role="button" aria-pressed="true" aria-label="Square {{square.id}} is empty"></div>
+            {{/if}}
           {{/if}}
         {{/each}}
       {{/each}}

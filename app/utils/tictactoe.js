@@ -10,20 +10,42 @@ let squareId = 1;
  * Returns an array that represents a row, eventually used in the grid
  * @param {Number} size The length of one row in the grid, for 3x3 grid, size is
  * 3
- * @param {Number} counter This number represents the eventual position of the
+ * @param {Number} rowPosition This number represents the eventual position of the
  * row in the grid, it increments at a different rate than the loop hence why is
  * used later in createGrid(size);
  * @returns {Array.<Object>} The array of objects representing "squares" in a
  * row.  Each array is a row in the grid.
  */
-function createRow(size, counter) {
-  return [...new Array(size)].map((el, i) => {
-    return { id: squareId++, marker: "", position: [counter, i] };
+function createRow(size, rowPosition) {
+  /**
+   * new Array creates an array of length size filled with undefined items the
+   * map fills those items one by one.
+   * @param {Object} el el represents the undefined item in the new Array, it is
+   * not use but importantly holds the 1st parameter position to allow for the
+   * index columnPosition (2nd parameter) to be used in the map
+   * @param {Number} columnPosition it is the index used in iteration of map,
+   * here it is used to mark the columnPosition of the Object eventually in the
+   * grid
+   */
+  return [...new Array(size)].map((el, columnPosition) => {
+    /**
+     * the returned object has three properties
+     * @property {Number} id The unique id of the square object
+     * @property {string} marker The marker starts as "" and will be filled by
+     * "x" or "o"
+     * @property {Array.<Number>} position Array with two numbers between 0 and
+     * 2 representing the index position of the object in the grid
+     */
+    return {
+      id: squareId++,
+      marker: "",
+      position: [rowPosition, columnPosition],
+    };
   });
 }
 
 /**
- * Creates a grid from rows made by createRow(size, counter);
+ * Creates a grid from rows made by createRow(size, rowPosition);
  * @param {Number} size The height of the grid, or how many rows in the grid.
  * For example a 3x3 grid, size would be 3
  * @returns {Array.<Array.<Object>>} Returns a nested Array with however many
@@ -31,10 +53,17 @@ function createRow(size, counter) {
  * also matches size.
  */
 function createGrid(size) {
-  let counter = -1;
+  /**
+   * will create a new array filled with the arrays return by createRow
+   * @param {Number} rowPosition index representing the row position of the
+   * objects made by createRow The rowPosition index begins at -1 because we
+   * need to iterate over it in the map
+   * and it will not iterate if we place it after the return statement
+   */
+  let rowPosition = -1;
   return [...new Array(size)].map(() => {
-    counter++;
-    return createRow(size, counter);
+    rowPosition++;
+    return createRow(size, rowPosition);
   });
 }
 
