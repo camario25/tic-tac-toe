@@ -33,12 +33,15 @@ function createRow(size, rowPosition) {
      * @property {Number} id The unique id of the square object
      * @property {string} marker The marker starts as "" and will be filled by
      * "x" or "o"
+     * @property {boolean} isWinningSquare Boolean that marks if the
+     * square(object) is one of the three in a row that marks a winner
      * @property {Array.<Number>} position Array with two numbers between 0 and
      * 2 representing the index position of the object in the grid
      */
     return {
       id: squareId++,
       marker: "",
+      isWinningSquare: false,
       position: [rowPosition, columnPosition],
     };
   });
@@ -73,8 +76,8 @@ function createGrid(size) {
  * only checks a 3x3 grid
  * @param {Array.<Array.<Object>>} grid Two dimensional array with objects
  * representing a tictactoe square
- * @returns {boolean} True is there is a winner (not empty and 3 in row that
- * match) or False is these conditions are not met.
+ * @returns {(Array | boolean)} Returs an Array containing the position indexes
+ * of the squares that match 3 in a row. False is these conditions are not met.
  */
 function isWinner(grid) {
   /**
@@ -86,49 +89,49 @@ function isWinner(grid) {
     grid[0][0].marker === grid[0][1].marker &&
     grid[0][1].marker === grid[0][2].marker
   ) {
-    return true;
+    return [grid[0][0].position, grid[0][1].position, grid[0][2].position];
   } else if (
     grid[1][0].marker !== "" &&
     grid[1][0].marker === grid[1][1].marker &&
     grid[1][1].marker === grid[1][2].marker
   ) {
-    return true;
+    return [grid[1][0].position, grid[1][1].position, grid[1][2].position];
   } else if (
     grid[2][0].marker !== "" &&
     grid[2][0].marker === grid[2][1].marker &&
     grid[2][1].marker === grid[2][2].marker
   ) {
-    return true;
+    return [grid[2][0].position, grid[2][1].position, grid[2][2].position];
   } else if (
     grid[0][0].marker !== "" &&
     grid[0][0].marker === grid[1][0].marker &&
     grid[1][0].marker === grid[2][0].marker
   ) {
-    return true;
+    return [grid[0][0].position, grid[1][0].position, grid[2][0].position];
   } else if (
     grid[0][1].marker !== "" &&
     grid[0][1].marker === grid[1][1].marker &&
     grid[1][1].marker === grid[2][1].marker
   ) {
-    return true;
+    return [grid[0][1].position, grid[1][1].position, grid[2][1].position];
   } else if (
     grid[0][2].marker !== "" &&
     grid[0][2].marker === grid[1][2].marker &&
     grid[1][2].marker === grid[2][2].marker
   ) {
-    return true;
+    return [grid[0][2].position, grid[1][2].position, grid[2][2].position];
   } else if (
     grid[0][0].marker !== "" &&
     grid[0][0].marker === grid[1][1].marker &&
     grid[1][1].marker === grid[2][2].marker
   ) {
-    return true;
+    return [grid[0][0].position, grid[1][1].position, grid[2][2].position];
   } else if (
     grid[0][2].marker !== "" &&
     grid[0][2].marker === grid[1][1].marker &&
     grid[1][1].marker === grid[2][0].marker
   ) {
-    return true;
+    return [grid[0][2].position, grid[1][1].position, grid[2][0].position];
   } else {
     return false;
   }

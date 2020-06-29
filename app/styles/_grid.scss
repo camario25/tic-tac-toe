@@ -38,5 +38,8 @@
       cursor: url(/assets/images/O-Cursor.cur), pointer;
       caret-color: $white;
     }
+    &--winning {
+      color: #eb63f7;
+    }
   }
 }

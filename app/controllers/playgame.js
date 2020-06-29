@@ -118,7 +118,10 @@ export default class PlaygameController extends Controller {
       "marker",
       this.currentMarker
     );
-    if (isWinner(this.model.grid)) {
+    const winSquares = isWinner(this.model.grid);
+    //if a winner winSquares returns an array with position indexes of the
+    //winning squares
+    if (winSquares) {
       //check for a winner
       //If true the winners wins attribute in the model increases by one
       this.winner = this.currentName;
@@ -136,6 +139,17 @@ export default class PlaygameController extends Controller {
           this.model.players[1].wins + WIN_INCREMENT
         );
       }
+      /**
+       * changes each square's isWinningSquare value to true in the model This
+       * allows for rendering of the winning squares in the template
+       * @param {Array} square is an array of two position indexes to acces the
+       * squares in the model
+       */
+      winSquares.forEach((square) => {
+        console.log(square[0]);
+        console.log(this.model.grid[square[0]][square[1]]);
+        set(this.model.grid[square[0]][square[1]], "isWinningSquare", true);
+      });
       this.userView = "endGame"; //view goes to end game on win
     } else if (!stillHasSpaces(this.model.grid)) {
       //check to see if there are more playable spaces
