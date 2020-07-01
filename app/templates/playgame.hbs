@@ -2,7 +2,7 @@
   <h1 class="game__title">Tic Tac Toe</h1>
 
   {{#if (eq this.userView "playerNames")}}
-    <Form>
+    <Form @class="form" @data-test="game-form">
       <h2 class='form__title'>Enter Player Names</h2>
       <h5 class='form__subtitle'>* player who goes first is selected at random</h5>
       <div class='form__group'>
@@ -23,7 +23,8 @@
             data-test="input-2" />
         </div>
       </div>
-      <Button @type="submit" @class="form__button-submit" @function={{this.newGame }} data-test-submit>Play</Button>
+      <Button @type="submit" @class="form__button-submit" @function={{this.newGame }}
+        @data-test="button-submit">Play</Button>
     </Form>
 
   {{else if (eq this.userView "playingGame")}}
@@ -31,7 +32,9 @@
       <div class="players__section-wrapper">
         {{#each @model.players as |player i|}}
           <div class="players__section">
-            <h2 class="players__title" data-test="name-{{inc i}}">{{player.name}} is "{{player.marker}}"</h2>
+            <h2 class="players__title" data-test="player-title-{{inc i}}"><span class="players-title__name"
+                data-test="player-title-name-{{inc i}}">{{player.name}}</span> is <span class="players-title__marker"
+                data-test="player-title-marker-{{inc i}}"></span>"{{player.marker}}"</h2>
             <p class="players__text" data-test="win-count-{{inc i}}">Wins: {{player.wins}}</p>
           </div>
         {{/each}}
@@ -44,17 +47,17 @@
       </div>
     </GameSection>
 
-    <GameSection @class="grid-container">
+    <GameSection @class="grid-container" @data-test="grid-container">
       {{#each @model.grid as |row|}}
         {{#each row as |square i|}}
           {{#if (eq square.marker "")}}
             <Button @type="button" @usage="grid"
               @class={{if (eq this.currentMarker "x") "grid__item grid__item--unmarked-x" "grid__item grid__item--unmarked-o"}}
               @clickFunction={{this.makeMove}} @param={{square.position}} @aria-label="Square {{square.id}} is free"
-              data-test="game-button-free-{{inc i}}"></Button>
+              @data-test="game-button-free-{{square.id}}"></Button>
           {{else}}
             <div class="grid__item grid__item--marked" tabindex="0" role="button" aria-pressed="true"
-              aria-label="Square {{square.id}} has an {{square.marker}}" data-test="game-button-marked{{i}}">
+              aria-label="Square {{square.id}} has an {{square.marker}}" data-test="game-button-marked-{{square.id}}">
               {{square.marker}}
             </div>
           {{/if}}
@@ -76,8 +79,8 @@
       </div>
     </GameSection>
 
-    <GameSection @class="end-modal-conatainer">
-      <div class="end-modal">
+    <GameSection @class="end-modal-container">
+      <div class="end-modal" data-test="end-modal">
         <h2 class="end-modal__title" data-test="game-result">
           {{#if this.winner}}
             {{this.winner}} You Won!
@@ -91,27 +94,28 @@
           </h3>
           <div class="end-modal__buttons-wrapper">
             <Button @class="end-modal__button end-modal__button--same-players" @type="button" @function={{this.newGame}}
-              data-test="button-same-players">Same Players</Button>
+              @data-test="button-same-players">Same Players</Button>
             <p class="end-modal__text">OR</p>
             <Button @class="end-modal__button end-modal__button--new-players" @type="button"
-              @function={{this.newPlayers}} data-test="button-new-players">New Players</Button>
+              @function={{this.newPlayers}} @data-test="button-new-players">New Players</Button>
           </div>
         </div>
       </div>
     </GameSection>
 
-    <GameSection @class="grid-container">
+    <GameSection @class="grid-container" @data-test="grid-container">
       {{#each @model.grid as |row|}}
         {{#each row as |square i|}}
           {{#if (or this.winner this.draw)}}
             {{#if square.marker}}
               <div class={{if square.isWinningSquare "grid__item grid__item--winning" "grid__item grid__item--marked"}}
                 tabindex="0" role="button" aria-pressed="true"
-                aria-label="Square {{square.id}} has an {{square.marker}}" data-test="button-end-game-marked-{{inc i}}">
+                aria-label="Square {{square.id}} has an {{square.marker}}"
+                data-test="button-end-game-marked-{{square.id}}">
                 {{square.marker}}</div>
             {{else}}
               <div class="grid__item" tabindex="0" role="button" aria-pressed="true"
-                aria-label="Square {{square.id}} is empty" data-test="button-end-game-unmarked-{{inc i}}">
+                aria-label="Square {{square.id}} is empty" data-test="button-end-game-unmarked-{{square.id}}">
               </div>
             {{/if}}
           {{/if}}

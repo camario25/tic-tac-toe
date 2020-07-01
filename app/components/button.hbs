@@ -1,9 +1,10 @@
 {{#if (eq @usage "grid")}}
-  <button type={{@type}} class={{@class}} {{on "click" (fn @clickFunction @param)}} aria-label={{@aria-label}}>
+  <button type={{@type}} class={{@class}} {{on "click" (fn @clickFunction @param)}} aria-label={{@aria-label}}
+    data-test={{@data-test}}>
     {{yield}}
   </button>
-  {{else}}
-  <button type={{@type}}  class={{@class}} {{on "click" @function}}>
+{{else}}
+  <button type={{@type}} class={{@class}} {{on "click" @function}} data-test={{@data-test}}>
     {{yield}}
   </button>
 {{/if}}
