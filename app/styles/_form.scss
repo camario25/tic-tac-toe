@@ -1,3 +1,16 @@
+.inputNames {
+  display: flex;
+  justify-content: center;
+  &__img--nacho {
+    align-self: center;
+  }
+  &__img--ramses {
+    align-self: center;
+  }
+  @media only screen and (max-width: 32rem) {
+    display: block;
+  }
+}
 .form {
   margin: 1rem;
   &__title {

@@ -1,31 +1,48 @@
 <main class="game-container">
-  <h1 class="game__title">Tic Tac Toe</h1>
+  <h1 class="game__title">Tic-Na-Cho</h1>
+  {{#if (eq this.userView "entrance")}}
+    <GameSection @class="game-header">
+      <h2 class="game__subtitle">
+        Nacho Vs. Ramses Tic Tac Toe
+      </h2>
+      <div class="game-header-img-wrapper">
+        <img class="game-header__img" src="assets/images/nacho-vs-ramses.jpeg" alt="Nacho vs Ramses">
+      </div>
+      <Button @class="game__button--enter" @function={{this.showInputNames}}>
+        Enter
+      </Button>
+    </GameSection>
+  {{/if}}
 
   {{#if (eq this.userView "playerNames")}}
-    <Form @class="form" @data-test="game-form">
-      <h2 class='form__title'>Enter Player Names</h2>
-      <h5 class='form__subtitle'>* player who goes first is selected at random</h5>
-      <div class='form__group'>
-        <label for="playerA">
-          Player Name
-        </label>
-        <div class="form__control-wrapper">
-          <Input class="form__control" id="playerA" placeholder="Name" @input={{this.inputPlayerA}} autocomplete="off"
-            data-test="input-1" />
+    <GameSection @class="inputNames">
+      <img class="inputNames__img--nacho" src="assets/images/nacho-intro-c.jpg" alt="Nacho enters ring">
+      <Form @class="form" @data-test="game-form">
+        <h2 class='form__title'>Enter Luchador's Names</h2>
+        <h5 class='form__subtitle'>* luchador who goes first is selected at random</h5>
+        <div class='form__group'>
+          <label for="playerA">
+            Luchador Name
+          </label>
+          <div class="form__control-wrapper">
+            <Input class="form__control" id="playerA" placeholder="Name" @input={{this.inputPlayerA}} autocomplete="off"
+              data-test="input-1" />
+          </div>
         </div>
-      </div>
-      <div class="form__group">
-        <label for="playerB">
-          Player Name
-        </label>
-        <div class="form__control-wrapper">
-          <Input class="form__control" id="playerB" placeholder="Name" @input={{this.inputPlayerB}} autocomplete="off"
-            data-test="input-2" />
+        <div class="form__group">
+          <label for="playerB">
+            Luchador Name
+          </label>
+          <div class="form__control-wrapper">
+            <Input class="form__control" id="playerB" placeholder="Name" @input={{this.inputPlayerB}} autocomplete="off"
+              data-test="input-2" />
+          </div>
         </div>
-      </div>
-      <Button @type="submit" @class="form__button-submit" @function={{this.newGame }}
-        @data-test="button-submit">Play</Button>
-    </Form>
+        <Button @type="submit" @class="form__button-submit" @function={{this.newGame }}
+          @data-test="button-submit">Play</Button>
+      </Form>
+      <img class="inputNames__img--ramses" src="assets/images/ramses-intro-c.jpg" alt="Ramses enters ring">
+    </GameSection>
 
   {{else if (eq this.userView "playingGame")}}
     <GameSection @class="players-container">
@@ -64,6 +81,14 @@
         {{/each}}
       {{/each}}
     </GameSection>
+    <GameSection @class="audio-section">
+      <h2 class="audio-section__title">
+        Play Tic-Na-Cho with Music
+      </h2>
+      <AudioControl @src="assets/sounds/nacho-theme.mp3" @class="audio-section__controls--theme">
+
+      </AudioControl>
+    </GameSection>
 
     <Footer />
 
@@ -83,14 +108,29 @@
       <div class="end-modal" data-test="end-modal">
         <h2 class="end-modal__title" data-test="game-result">
           {{#if this.winner}}
-            {{this.winner}} You Won!
+            {{#if (eq this.currentMarker "x")}}
+              {{this.winner}}, You Have Eagle Powers!
+            {{else}}
+              {{this.winner}}, Your Muscles Are Number ONE!
+            {{/if}}
           {{else if this.draw}}
-            Result is a Draw
+            It's a Draw, Eagle Powers Was A Lie!
           {{/if}}
         </h2>
+        <div class="end-modal-img-container">
+          {{#if this.winner}}
+            {{#if (eq this.currentMarker "x")}}
+              <img class="end-modal__img--nacho" src="assets/images/nacho-win-c.jpg" alt="Nacho Wins">
+            {{else}}
+              <img class="end-modal__img--ramses" src="assets/images/ramses-win-c.jpg" alt="Ramses Wins">
+            {{/if}}
+          {{else if this.draw}}
+            <img class="end-modal__img--draw" src="assets/images/nacho-ramses-draw.jpg" alt="It's a draw">
+          {{/if}}
+        </div>
         <div class="end-modal__section">
           <h3 class="end-modal-section__title">
-            Play Again
+            Wrestle Again
           </h3>
           <div class="end-modal__buttons-wrapper">
             <Button @class="end-modal__button end-modal__button--same-players" @type="button" @function={{this.newGame}}
@@ -107,7 +147,17 @@
       {{#each @model.grid as |row|}}
         {{#each row as |square|}}
           {{#if (or this.winner this.draw)}}
-            {{#if square.marker}}
+            {{#if square.isWinningSquare}}
+              <div class="grid__item grid__item--winning" tabindex="0" role="button" aria-pressed="true"
+                aria-label="Square {{square.id}} has an {{square.marker}}"
+                data-test="button-end-game-marked-{{square.id}}">
+                {{#if (eq square.marker "x")}}
+                  <img class="grid-item__img--nacho" src="assets/images/nacho-mask-c.jpg" alt="nacho mask">
+                {{else}}
+                  <img class="grid-item__img--ramses" src="assets/images/ramses-mask-c.jpg" alt="ramses mask">
+                {{/if}}
+              </div>
+            {{else if square.marker}}
               <div class={{if square.isWinningSquare "grid__item grid__item--winning" "grid__item grid__item--marked"}}
                 tabindex="0" role="button" aria-pressed="true"
                 aria-label="Square {{square.id}} has an {{square.marker}}"

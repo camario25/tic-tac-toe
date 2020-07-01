@@ -13,7 +13,7 @@ import {
 export default class PlaygameController extends Controller {
   constructor() {
     super(...arguments);
-    this.userView = "playerNames"; //game starts with asking for player names
+    this.userView = "entrance"; //game starts with welcome page
   }
 
   @tracked userView; //{string} used to decide what to render to the user
@@ -34,6 +34,11 @@ export default class PlaygameController extends Controller {
    */
   setGrid(size) {
     this.set("model.grid", createGrid(size));
+  }
+
+  @action
+  showInputNames() {
+    this.userView = "playerNames";
   }
 
   /**

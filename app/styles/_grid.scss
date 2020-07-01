@@ -1,6 +1,6 @@
 .grid-container {
-  width: 27rem;
-  height: 27rem;
+  width: 31rem;
+  height: 31rem;
   margin: 1rem auto;
   background-color: #637ff7;
   color: $white;
@@ -8,7 +8,7 @@
   border-radius: 0.625rem;
   display: grid;
   grid-template: repeat(3, 1fr) / repeat(3, 1fr);
-  @media only screen and (max-width: 29rem) {
+  @media only screen and (max-width: 32rem) {
     width: 18rem;
     height: 18rem;
     margin-top: 0.25rem;
@@ -23,8 +23,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    @media only screen and (max-width: 29rem) {
+    @media only screen and (max-width: 32rem) {
       font-size: 5rem;
+      .grid-item__img--nacho {
+        width: 90%;
+      }
+      .grid-item__img--ramses {
+        width: 90%;
+      }
     }
     &--unmarked-x:hover {
       border-color: $dark-purple;
@@ -39,7 +45,11 @@
       caret-color: $white;
     }
     &--winning {
-      color: #eb63f7;
+      // content: url("/assets/images/nacho-mask-c.jpg");
+      // display: block;
+      // margin-left: auto;
+      // margin-right: auto;
+      // width: 40%;
     }
   }
 }
