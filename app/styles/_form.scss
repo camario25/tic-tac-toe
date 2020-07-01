@@ -15,17 +15,17 @@
   margin: 1rem;
   &__title {
     margin: 1rem 1rem 0.5rem 1rem;
-    color: $dark-purple;
+    color: $burgundy;
     font-size: 2rem;
   }
   &__subtitle {
     margin-bottom: 2rem;
-    color: $light-purple;
+    color: $dark-turquoise;
   }
   &__group {
     font-size: 1.5rem;
     margin: 1rem 1rem 1.3rem 1rem;
-    color: #637ff7;
+    color: $burgundy;
   }
   &__control {
     margin-top: 0.5rem;
@@ -33,21 +33,21 @@
     height: 2rem;
     border-radius: 0.25rem;
     background-color: $white;
-    border-color: $dark-purple;
-    color: $dark-purple;
+    border-color: $burgundy;
+    color: $burgundy;
     box-sizing: border-box;
     @media only screen and (min-width: 64rem) {
       &:focus,
       &:hover {
         border-width: 0.25rem;
-        border-color: $dark-purple;
+        border-color: $dark-turquoise;
       }
     }
     @media only screen and (max-width: 64rem) {
       height: 3rem;
     }
     &::placeholder {
-      color: $dark-purple;
+      color: $dark-turquoise;
       @media only screen and (max-width: 64rem) {
         text-align: center;
       }
@@ -59,16 +59,16 @@
     width: 9rem;
     height: 3rem;
     border-radius: 0.25rem;
-    background-color: $dark-purple;
-    border-color: $dark-purple;
+    background-color: $burgundy;
+    border-color: $burgundy;
     color: $white;
     @media only screen and (min-width: 64rem) {
       &:focus,
       &:hover {
         width: 9.25rem;
         height: 3.1rem;
-        border-color: $light-purple;
-        background-color: #6056d6;
+        border-color: $dark-turquoise;
+        background-color: $dark-turquoise;
         font-size: 2.25rem;
       }
     }

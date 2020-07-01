@@ -11,13 +11,40 @@
   font-weight: 500;
   text-align: center;
   margin: $all-sides-same;
-}
-
-.game__title {
-  color: $dark-purple;
-  font-size: $h1-font-size;
-  margin: $h1-margin;
-  @media only screen and (max-width: 24rem) {
-    margin: 0.5rem 1rem;
+  .game__title {
+    color: $burgundy;
+    font-size: $h1-font-size;
+    margin: $h1-margin;
+    @media only screen and (max-width: 24rem) {
+      margin: 0.5rem 1rem;
+    }
+  }
+  .game__subtitle {
+    margin: 1.5rem 1rem 1.25rem 1rem;
+    font-size: 1.75rem;
+    color: $dark-turquoise;
+  }
+  .game__button--enter {
+    margin-top: 2rem;
+    font-size: 2rem;
+    width: 9rem;
+    height: 3rem;
+    border-radius: 0.25rem;
+    background-color: $burgundy;
+    border-color: $burgundy;
+    color: $white;
+    @media only screen and (min-width: 64rem) {
+      &:focus,
+      &:hover {
+        width: 9.25rem;
+        height: 3.1rem;
+        border-color: $dark-turquoise;
+        background-color: $dark-turquoise;
+        font-size: 2.25rem;
+      }
+    }
+    @media only screen and (max-width: 64rem) {
+      height: 4rem;
+    }
   }
 }

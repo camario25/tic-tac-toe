@@ -8,7 +8,7 @@
     justify-content: space-evenly;
   }
   .players__section {
-    color: #31298a;
+    color: $burgundy;
     font-size: 2rem;
   }
   .players__title {
@@ -16,10 +16,11 @@
   }
   .players__text {
     font-size: 1.5rem;
-    color: #8a80ff;
+    color: $dark-turquoise;
   }
   .players__subtitle {
     font-size: 4rem;
+    color: $dark-turquoise;
     @media only screen and (max-width: 29rem) {
       font-size: 3rem;
     }

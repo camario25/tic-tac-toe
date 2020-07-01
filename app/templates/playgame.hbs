@@ -3,7 +3,7 @@
   {{#if (eq this.userView "entrance")}}
     <GameSection @class="game-header">
       <h2 class="game__subtitle">
-        Nacho Vs. Ramses Tic Tac Toe
+        Nacho Vs. Ramses - Tic Tac Toe
       </h2>
       <div class="game-header-img-wrapper">
         <img class="game-header__img" src="assets/images/nacho-vs-ramses.jpeg" alt="Nacho vs Ramses">
@@ -50,8 +50,15 @@
         {{#each @model.players as |player i|}}
           <div class="players__section">
             <h2 class="players__title" data-test="player-title-{{inc i}}"><span class="players-title__name"
-                data-test="player-title-name-{{inc i}}">{{player.name}}</span> is <span class="players-title__marker"
-                data-test="player-title-marker-{{inc i}}"></span>"{{player.marker}}"</h2>
+                data-test="player-title-name-{{inc i}}">{{player.name}}</span> Is
+              <span class="players-title__marker" data-test="player-title-marker-{{inc i}}">
+                {{#if (eq player.marker "x")}}
+                  Nacho: "X"
+                {{else}}
+                  Ramses: "O"
+                {{/if}}
+              </span>
+            </h2>
             <p class="players__text" data-test="win-count-{{inc i}}">Wins: {{player.wins}}</p>
           </div>
         {{/each}}
@@ -73,23 +80,16 @@
               @clickFunction={{this.makeMove}} @param={{square.position}} @aria-label="Square {{square.id}} is free"
               @data-test="game-button-free-{{square.id}}"></Button>
           {{else}}
-            <div class="grid__item grid__item--marked" tabindex="0" role="button" aria-pressed="true"
-              aria-label="Square {{square.id}} has an {{square.marker}}" data-test="game-button-marked-{{square.id}}">
+            <div
+              class={{if (eq square.marker "x") "grid__item grid__item--marked-nacho" "grid__item grid__item--marked-ramses"}}
+              tabindex="0" role="button" aria-pressed="true" aria-label="Square {{square.id}} has an {{square.marker}}"
+              data-test="game-button-marked-{{square.id}}">
               {{square.marker}}
             </div>
           {{/if}}
         {{/each}}
       {{/each}}
     </GameSection>
-    <GameSection @class="audio-section">
-      <h2 class="audio-section__title">
-        Play Tic-Na-Cho with Music
-      </h2>
-      <AudioControl @src="assets/sounds/nacho-theme.mp3" @class="audio-section__controls--theme">
-
-      </AudioControl>
-    </GameSection>
-
     <Footer />
 
   {{else if (eq this.userView "endGame")}}
@@ -106,17 +106,12 @@
 
     <GameSection @class="end-modal-container">
       <div class="end-modal" data-test="end-modal">
-        <h2 class="end-modal__title" data-test="game-result">
-          {{#if this.winner}}
-            {{#if (eq this.currentMarker "x")}}
-              {{this.winner}}, You Have Eagle Powers!
-            {{else}}
-              {{this.winner}}, Your Muscles Are Number ONE!
-            {{/if}}
-          {{else if this.draw}}
-            It's a Draw, Eagle Powers Was A Lie!
-          {{/if}}
-        </h2>
+        <h2 class={{if (eq this.currentMarker "x") "end-modal__title" "end-modal__title end-modal__title--ramses"}}
+          data-test="game-result">
+          {{#if this.winner}} {{#if (eq this.currentMarker "x")}} {{this.winner}}, You Have Eagle Powers! {{else}}
+              {{this.winner}}, Your Muscles Are Number ONE! {{/if}}
+          {{else if this.draw}} A Draw... Eagle Powers Was A Lie!
+          {{/if}} </h2>
         <div class="end-modal-img-container">
           {{#if this.winner}}
             {{#if (eq this.currentMarker "x")}}
@@ -158,7 +153,8 @@
                 {{/if}}
               </div>
             {{else if square.marker}}
-              <div class={{if square.isWinningSquare "grid__item grid__item--winning" "grid__item grid__item--marked"}}
+              <div
+                class={{if (eq square.marker "x") "grid__item grid__item--marked-nacho" "grid__item grid__item--marked-ramses"}}
                 tabindex="0" role="button" aria-pressed="true"
                 aria-label="Square {{square.id}} has an {{square.marker}}"
                 data-test="button-end-game-marked-{{square.id}}">
@@ -172,8 +168,6 @@
         {{/each}}
       {{/each}}
     </GameSection>
-
     <Footer />
   {{/if}}
-
 </main>

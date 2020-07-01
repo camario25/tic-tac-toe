@@ -3,7 +3,10 @@
   &__title {
     margin: 1.5rem;
     font-size: 2.5rem;
-    color: #31298a;
+    color: $burgundy;
+  }
+  &__title--ramses {
+    color: $gold;
   }
   &__section {
     margin: 1rem;
@@ -11,7 +14,7 @@
   &-section__title {
     margin: 1rem;
     font-size: 2.5rem;
-    color: #31298a;
+    color: $dark-turquoise;
   }
   &__buttons-wrapper {
     display: flex;
@@ -23,13 +26,13 @@
     height: 2rem;
     width: 9rem;
     border-radius: 0.25rem;
-    background-color: #31298a;
-    border-color: #8a80ff;
+    background-color: $burgundy;
+    border-color: $dark-turquoise;
     color: $white;
     @media only screen and (min-width: 64rem) {
       &:hover,
       &:focus {
-        background-color: #6056d6;
+        background-color: $dark-turquoise;
         height: 2.1rem;
         width: 9.25rem;
       }
@@ -40,6 +43,6 @@
     }
   }
   &__text {
-    color: #8a80ff;
+    color: $dark-turquoise;
   }
 }
