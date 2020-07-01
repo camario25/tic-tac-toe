@@ -146,8 +146,6 @@ export default class PlaygameController extends Controller {
        * squares in the model
        */
       winSquares.forEach((square) => {
-        console.log(square[0]);
-        console.log(this.model.grid[square[0]][square[1]]);
         set(this.model.grid[square[0]][square[1]], "isWinningSquare", true);
       });
       this.userView = "endGame"; //view goes to end game on win
