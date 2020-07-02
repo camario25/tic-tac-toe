@@ -206,9 +206,10 @@ function getCurrentName(currentName, playerA, playerB) {
 }
 
 /**
- * uses Math.random() api which returns a float between 0 and .9 repeating to
- * give a 50 50 chance of returning an "x" or an "o".  Used to select the player
- * who goes first at random.
+ * Gives a 50 50 chance of returning an "x" or an "o".  Used to select the
+ * player who goes first at random.
+ * @param {Number} randomNumber is expected to to take the Math.random() api
+ * which returns a Number between 0 inclusive and 1 (not inclusive)
  * @returns {string} "x" if Math.random() returns less than .5 or "o" if
  * otherwise
  */
