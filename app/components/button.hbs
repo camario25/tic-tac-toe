@@ -4,7 +4,7 @@
     {{yield}}
   </button>
 {{else}}
-  <button type={{@type}} class={{@class}} {{on "click" @function}} data-test={{@data-test}}>
+  <button type={{@type}} class={{@class}} {{on "click" @function}} disabled={{@disabled}} data-test={{@data-test}}>
     {{yield}}
   </button>
 {{/if}}

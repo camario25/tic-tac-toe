@@ -1,19 +1,19 @@
 .grid-container {
-  width: 31rem;
-  height: 31rem;
+  width: $grid-side-length;
+  height: $grid-side-length;
   margin: 1rem auto;
   background-color: $light-turquoise;
   border: 0.375rem solid $burgundy;
   border-radius: 0.625rem;
   display: grid;
   grid-template: repeat(3, 1fr) / repeat(3, 1fr);
-  @media only screen and (max-width: 32rem) {
+  @media only screen and (max-width: $grid-side-length + 1) {
     width: 18rem;
     height: 18rem;
     margin-top: 0.25rem;
   }
   .grid__item {
-    color: $burgundy;
+    color: $dark-turquoise;
     background-color: $light-turquoise;
     border: 0.375rem solid $burgundy;
     border-radius: 0.125rem;
@@ -22,7 +22,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    @media only screen and (max-width: 32rem) {
+    @media only screen and (max-width: $grid-side-length + 1) {
       font-size: 5rem;
       .grid-item__img--nacho {
         width: 90%;
@@ -33,13 +33,13 @@
     }
     &--unmarked-x:hover {
       border-color: $burgundy;
-      background-color: #a09bdd;
+      background-color: $dark-turquoise;
       cursor: url(/assets/images/X-Cursor.cur), pointer;
       caret-color: $white;
     }
     &--unmarked-o:hover {
       border-color: $burgundy;
-      background-color: #a09bdd;
+      background-color: $gold;
       cursor: url(/assets/images/O-Cursor.cur), pointer;
       caret-color: $white;
     }

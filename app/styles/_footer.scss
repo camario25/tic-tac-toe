@@ -8,13 +8,13 @@
     &:hover {
       color: $dark-turquoise;
     }
-    @media only screen and (max-width: 32rem) {
+    @media only screen and (max-width: $grid-side-length + 1) {
       margin: 0.5rem;
     }
   }
   .game-footer-menu-item__icon {
     margin: 0.5rem;
-    @media only screen and (max-width: 32rem) {
+    @media only screen and (max-width: $grid-side-length + 1) {
       margin: 0.1rem;
     }
   }

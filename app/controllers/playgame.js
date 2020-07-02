@@ -17,6 +17,8 @@ export default class PlaygameController extends Controller {
   }
 
   @tracked userView; //{string} used to decide what to render to the user
+  //{boolean} name submit button disabled by default
+  @tracked disabledSubmit = true;
   @tracked currentMarker; //{string} current marker either "x" or "o"
   @tracked currentName; //{string} Name of player who's move it is
   @tracked playerA; //{string} Name of player from first input
@@ -36,6 +38,13 @@ export default class PlaygameController extends Controller {
     this.set("model.grid", createGrid(size));
   }
 
+  enableSubmit() {
+    if (this.playerA && this.playerB) {
+      this.disabledSubmit = false;
+    } else {
+      this.disabledSubmit = true;
+    }
+  }
   @action
   showInputNames() {
     this.userView = "playerNames";
@@ -48,6 +57,7 @@ export default class PlaygameController extends Controller {
   @action
   inputPlayerA(e) {
     this.playerA = e.target.value;
+    this.enableSubmit();
   }
 
   /**
@@ -57,6 +67,7 @@ export default class PlaygameController extends Controller {
   @action
   inputPlayerB(e) {
     this.playerB = e.target.value;
+    this.enableSubmit();
   }
 
   /**

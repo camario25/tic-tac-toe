@@ -25,8 +25,8 @@
             Luchador Name
           </label>
           <div class="form__control-wrapper">
-            <Input class="form__control" id="playerA" placeholder="Name" @input={{this.inputPlayerA}} autocomplete="off"
-              data-test="input-1" />
+            <Input class="form__control" id="playerA" placeholder="*Name" @input={{this.inputPlayerA}}
+              autocomplete="off" data-test="input-1" />
           </div>
         </div>
         <div class="form__group">
@@ -34,12 +34,13 @@
             Luchador Name
           </label>
           <div class="form__control-wrapper">
-            <Input class="form__control" id="playerB" placeholder="Name" @input={{this.inputPlayerB}} autocomplete="off"
-              data-test="input-2" />
+            <Input class="form__control" id="playerB" placeholder="*Name" @input={{this.inputPlayerB}}
+              autocomplete="off" data-test="input-2" />
           </div>
         </div>
-        <Button @type="submit" @class="form__button-submit" @function={{this.newGame }}
-          @data-test="button-submit">Play</Button>
+        <Button @type="submit"
+          @class={{if this.disabledSubmit "form__button-submit form__button-submit--disabled" "form__button-submit"}}
+          @function={{this.newGame }} @disabled={{this.disabledSubmit}} @data-test="button-submit">Play</Button>
       </Form>
       <img class="inputNames__img--ramses" src="assets/images/ramses-intro-c.jpg" alt="Ramses enters ring">
     </GameSection>
@@ -67,7 +68,9 @@
         <h2 class="players__title" data-test="current-name">
           {{this.currentName}}'s Turn
         </h2>
-        <h3 class="players__subtitle" data-test="current-marker">{{this.currentMarker}}</h3>
+        <h3
+          class={{if (eq this.currentMarker "x") "players__subtitle players__subtitle--nacho" "players__subtitle players__subtitle--ramses"}}
+          data-test="current-marker">{{this.currentMarker}}</h3>
       </div>
     </GameSection>
 

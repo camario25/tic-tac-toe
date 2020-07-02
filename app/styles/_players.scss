@@ -1,5 +1,5 @@
 .players-container {
-  margin: 1rem;
+  margin: $all-sides-same;
   @media only screen and (max-width: 29rem) {
     margin-bottom: 0.25rem;
   }
@@ -21,6 +21,9 @@
   .players__subtitle {
     font-size: 4rem;
     color: $dark-turquoise;
+    &--ramses {
+      color: $gold;
+    }
     @media only screen and (max-width: 29rem) {
       font-size: 3rem;
     }
