@@ -15,19 +15,37 @@ module("Acceptance | playgame", function (hooks) {
     );
   });
 
-  test("visiting /playgame should make form appear with two inputs and submit button", async function (assert) {
-    assert.expect(5);
+  test("visiting /playgame should make welcome screen appear with one button", async function (assert) {
+    assert.expect(2);
     await visit("/playgame");
-    assert.equal(currentURL(), "/playgame", "route /playgame routes properly");
+    assert.dom("[data-test='game-header-section']").exists();
+    assert.dom("[data-test='game__button--enter']").exists();
+  });
+
+  test("clicking enter button should make form appear with two inputs and submit button", async function (assert) {
+    assert.expect(4);
+    await visit("/playgame");
+    await click("[data-test='game__button--enter']");
     assert.dom("[data-test='game-form']").exists();
     assert.dom("[data-test='input-1']").exists();
     assert.dom("[data-test='input-2']").exists();
     assert.dom("[data-test='button-submit']").exists();
   });
 
-  test("should submit names and display names to user", async function (assert) {
+  test("filling in names should enable submit button", async function (assert) {
+    assert.expect(2);
+    await visit("/playgame");
+    await click("[data-test='game__button--enter']");
+    assert.dom("[data-test='button-submit']").isDisabled();
+    await fillIn("[data-test='input-1']", "Test-Name1");
+    await fillIn("[data-test='input-2']", "Test-Name2");
+    assert.dom("[data-test='button-submit']").isNotDisabled();
+  });
+
+  test("click submit button should submit names and display names to user", async function (assert) {
     assert.expect(4);
     await visit("/playgame");
+    await click("[data-test='game__button--enter']");
     await fillIn("[data-test='input-1']", "Test-Name1");
     await fillIn("[data-test='input-2']", "Test-Name2");
     assert.dom("[data-test='input-1']").hasValue("Test-Name1");
@@ -39,6 +57,7 @@ module("Acceptance | playgame", function (hooks) {
   test("should display win totals - zero wins to start", async function (assert) {
     assert.expect(2);
     await visit("/playgame");
+    await click("[data-test='game__button--enter']");
     await fillIn("[data-test='input-1']", "Test-Name1");
     await fillIn("[data-test='input-2']", "Test-Name2");
     await click("[data-test='button-submit']");
@@ -48,6 +67,7 @@ module("Acceptance | playgame", function (hooks) {
   test("should display grid of nine empty buttons", async function (assert) {
     assert.expect(11);
     await visit("/playgame");
+    await click("[data-test='game__button--enter']");
     await fillIn("[data-test='input-1']", "Test-Name1");
     await fillIn("[data-test='input-2']", "Test-Name2");
     await click("[data-test='button-submit']");
@@ -71,6 +91,7 @@ module("Acceptance | playgame", function (hooks) {
   test("clicks on grid should alternate 'x','o' starting with x", async function (assert) {
     assert.expect(3);
     await visit("/playgame");
+    await click("[data-test='game__button--enter']");
     await fillIn("[data-test='input-1']", "Test-Name1");
     await fillIn("[data-test='input-2']", "Test-Name2");
     await click("[data-test='button-submit']");
@@ -84,6 +105,7 @@ module("Acceptance | playgame", function (hooks) {
   test("winning combination should bring up end-modal with two replay buttons", async function (assert) {
     assert.expect(3);
     await visit("/playgame");
+    await click("[data-test='game__button--enter']");
     await fillIn("[data-test='input-1']", "Test-Name1");
     await fillIn("[data-test='input-2']", "Test-Name2");
     await click("[data-test='button-submit']");
@@ -99,6 +121,7 @@ module("Acceptance | playgame", function (hooks) {
   test("clicking same players button brings up new grid with same player names", async function (assert) {
     assert.expect(11);
     await visit("/playgame");
+    await click("[data-test='game__button--enter']");
     await fillIn("[data-test='input-1']", "Test-Name1");
     await fillIn("[data-test='input-2']", "Test-Name2");
     await click("[data-test='button-submit']");
@@ -123,6 +146,7 @@ module("Acceptance | playgame", function (hooks) {
   test("clicking new players button brings up form to insert player names again", async function (assert) {
     assert.expect(1);
     await visit("/playgame");
+    await click("[data-test='game__button--enter']");
     await fillIn("[data-test='input-1']", "Test-Name1");
     await fillIn("[data-test='input-2']", "Test-Name2");
     await click("[data-test='button-submit']");

@@ -9,31 +9,31 @@ module("Unit | Controller | playgame", function (hooks) {
     assert.ok(controller);
     assert.equal(
       controller.userView,
-      "playerNames",
-      "view is set to player form"
+      "entrance",
+      "view is set to player entrance"
     );
   });
 
   test("it changes playerA name on input action", function (assert) {
     let controller = this.owner.lookup("controller:playgame");
-    const domMock = {
+    const eventMock = {
       target: { value: "Player1-Name" },
     };
     assert.equal(controller.playerA, null, "playerA initialized");
-    controller.send("inputPlayerA", domMock);
+    controller.send("inputPlayerA", eventMock);
     assert.equal(controller.playerA, "Player1-Name", "playerA updated");
   });
   test("it changes playerB name on input action", function (assert) {
     let controller = this.owner.lookup("controller:playgame");
-    const domMock = {
+    const eventMock = {
       target: { value: "Player2-Name" },
     };
     assert.equal(controller.playerB, null, "playerB initialized");
-    controller.send("inputPlayerB", domMock);
+    controller.send("inputPlayerB", eventMock);
     assert.equal(controller.playerB, "Player2-Name", "playerB updated");
   });
   // test("it changes controller user view on form submit", function (assert) {
-  //   const domMock = {
+  //   const eventMock = {
   //     target: { value: "test1" },
   //     preventDefault: function () {},
   //   };
@@ -44,7 +44,7 @@ module("Unit | Controller | playgame", function (hooks) {
   //     "view is set to player form"
   //   );
 
-  //   controller.send("newGame", domMock);
+  //   controller.send("newGame", eventMock);
   //   assert.equal(
   //     controller.userView,
   //     "playingGame",
