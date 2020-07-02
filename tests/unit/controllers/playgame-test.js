@@ -1,16 +1,26 @@
-import { module, test } from "qunit";
+import { module, test, todo } from "qunit";
 import { setupTest } from "ember-qunit";
 
 module("Unit | Controller | playgame", function (hooks) {
   setupTest(hooks);
 
-  test("it exists, and userView starts on player form", function (assert) {
+  test("userView starts on player form", function (assert) {
     let controller = this.owner.lookup("controller:playgame");
     assert.ok(controller);
     assert.equal(
       controller.userView,
       "entrance",
       "view is set to player entrance"
+    );
+  });
+
+  test("userView changes to playerNames form on showInputNames action", function (assert) {
+    let controller = this.owner.lookup("controller:playgame");
+    controller.send("showInputNames");
+    assert.equal(
+      controller.userView,
+      "playerNames",
+      "view is set to playerNames form"
     );
   });
 
@@ -32,33 +42,71 @@ module("Unit | Controller | playgame", function (hooks) {
     controller.send("inputPlayerB", eventMock);
     assert.equal(controller.playerB, "Player2-Name", "playerB updated");
   });
-  // test("it changes controller user view on form submit", function (assert) {
-  //   const eventMock = {
-  //     target: { value: "test1" },
-  //     preventDefault: function () {},
-  //   };
-  //   let controller = this.owner.lookup("controller:playgame");
-  //   assert.equal(
-  //     controller.userView,
-  //     "playerNames",
-  //     "view is set to player form"
-  //   );
+  test("it changes controller user view on form submit", function (assert) {
+    const model = { grid: [], players: [{ name: "" }, { marker: "" }] };
+    const eventMock = {
+      target: { value: "test1" },
+      preventDefault: function () {},
+    };
+    let controller = this.owner.lookup("controller:playgame");
+    controller.set("model", model);
+    controller.send("newGame", eventMock);
 
-  //   controller.send("newGame", eventMock);
-  //   assert.equal(
-  //     controller.userView,
-  //     "playingGame",
-  //     "view has changed to game play"
-  //   );
-  // });
-  // test("it changes controller user view on new players submit", function (assert) {
-  //   let controller = this.owner.lookup("controller:playgame");
-  //   assert.ok(controller);
-  //   assert.equal(
-  //     controller.userView,
-  //     "playerNames",
-  //     "view is set to player form"
-  //   );
-  //   controller.send("newPlayers");
-  // });
+    assert.equal(
+      controller.userView,
+      "playingGame",
+      "view is set to game play with grid and names"
+    );
+  });
+  test("model updates with player names on submit", function (assert) {
+    const playerA = "nameA";
+    const playerB = "nameB";
+    const modelMock = {
+      grid: [],
+      players: [
+        { name: "", marker: "" },
+        { name: "", marker: "" },
+      ],
+    };
+    const eventMock = {
+      target: { value: "test1" },
+      preventDefault: function () {},
+    };
+    let controller = this.owner.lookup("controller:playgame");
+    controller.set("model", modelMock);
+    controller.set("playerA", playerA);
+    controller.set("playerB", playerB);
+    controller.send("newGame", eventMock);
+
+    assert.equal(
+      controller.model.players[0].name,
+      "nameA",
+      "name for player x properly set in model"
+    );
+    assert.equal(
+      controller.model.players[1].name,
+      "nameB",
+      "name for player o properly set in model"
+    );
+  });
+  test("correctly updates model with currentMarker, makeMove action", function (assert) {
+    const modelMock = { grid: [], players: [{ name: "" }, { marker: "" }] };
+    const testPosition = [0, 0]; //test position index of a square in the grid
+    const testCurrentMarker = "x";
+    const eventMock = {
+      target: { value: "test1" },
+      preventDefault: function () {},
+    };
+    let controller = this.owner.lookup("controller:playgame");
+    controller.set("model", modelMock);
+    controller.set("currentMarker", testCurrentMarker);
+    controller.send("newGame", eventMock);
+    controller.send("makeMove", testPosition);
+
+    assert.equal(
+      controller.model.grid[0][0].marker,
+      "x",
+      "grid object was properly updated with marker in the model"
+    );
+  });
 });

@@ -140,6 +140,18 @@
         </div>
       </div>
     </GameSection>
+    <GameSection @class="audio-section">
+      <audio controls autoplay>
+        {{#if this.winner}}
+          <source
+            src={{if (eq this.currentMarker "x") "assets/sounds/nacho-libre-theme.mp3" "assets/sounds/ramses-number-1.mp3"}}>
+          Sorry, your browser does not support the audio controls.
+        {{else}}
+          <source src="assets/sounds/draw-no-powers.mp3">
+          Sorry, your browser does not support the audio controls.
+        {{/if}}
+      </audio>
+    </GameSection>
 
     <GameSection @class="grid-container" @data-test="grid-container">
       {{#each @model.grid as |row|}}
