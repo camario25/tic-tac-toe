@@ -212,9 +212,9 @@ function getCurrentName(currentName, playerA, playerB) {
  * @returns {string} "x" if Math.random() returns less than .5 or "o" if
  * otherwise
  */
-function selectFirstPlayer() {
+function selectFirstPlayer(randomNumber) {
   const FIFTY_PERCENT_CHANCE = 0.5;
-  return Math.random() < FIFTY_PERCENT_CHANCE ? "x" : "o";
+  return randomNumber < FIFTY_PERCENT_CHANCE ? "x" : "o";
 }
 
 export {

@@ -18,7 +18,7 @@ I had a good understanding of how this app would be implemented using vanilla ja
 
 Once I built the MVP with good comments and some tests, I had friends and family play with my app and provide me feedback. Much of the feedback was about making it funner, especially the ending, I did not yet have a theme. It was not long before I chose Nacho Libre. I then refactored my code to include the theme. Challenges here were in making sure all the handlebars logic worked with the possible outcomes: Nacho: "x" moves/wins, Ramses: "o" moves/wins, or a draw. Finally I completed comments and more tests.
 
-## player experience
+## Player experience
 
 Tic-Na-Cho is currently a 2 player game. Players will arrive at a welcome screen introducing them to the Nacho Libre theme. Players will then click to enter the game. Players will arrive at a form to submit their names. Once they submit they will be greeted with their assignments, Nacho: "x" or Ramses: "o." There is also a scoreboard keeping track of the wins by player name. The current player is clearly displayed.
 
@@ -49,7 +49,7 @@ I am pleased with the UX, UI, but due to time constraints I did not extend the g
 - Visit the app at [http://localhost:4200](http://localhost:4200).
 - Visit tests tests at [http://localhost:4200/tests](http://localhost:4200/tests)
 
-# From Embej.js: how to collaborate from a git clone
+# From Embej.js: how to collaborate from git clone
 
 ## Prerequisites
 

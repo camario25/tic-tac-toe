@@ -86,7 +86,7 @@ export default class PlaygameController extends Controller {
     set(this.model.players[0], "name", this.playerA);
     set(this.model.players[1], "name", this.playerB);
 
-    const firstPlayer = selectFirstPlayer();
+    const firstPlayer = selectFirstPlayer(Math.random());
     if (firstPlayer === "x") {
       set(this.model.players[0], "marker", "x");
       set(this.model.players[1], "marker", "o");
