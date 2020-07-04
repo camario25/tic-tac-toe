@@ -74,69 +74,97 @@ function createGrid(size) {
 
 /**
  * Dertirmines if there's a  Winner by checking if object value marker is not
- * empty and equal to "x" or "o" 3 times in a row in any direction.  Currently
- * only checks a 3x3 grid
- * @param {Array.<Array.<Object>>} grid Two dimensional array with objects
+ * empty and equal to the other markers in a row in any direction (horzontal,
+ * vertical, diagonal). Function can check an NxN grid.
+ * @param {Array.<Array.<Object>>} grid grid Two dimensional array with objects
  * representing a tictactoe square
  * @returns {(Array | boolean)} Returs an Array containing the position indexes
- * of the squares that match 3 in a row. False is these conditions are not met.
+ * of the squares that match 3 in a row. False if these conditions are not met.
  */
 function isWinner(grid) {
-  /**
-   * @property {string} marker property on the object representing the tictactoe
-   * square. Values are either "","x", or "o".
-   */
-  if (
-    grid[0][0].marker !== "" &&
-    grid[0][0].marker === grid[0][1].marker &&
-    grid[0][1].marker === grid[0][2].marker
-  ) {
-    return [grid[0][0].position, grid[0][1].position, grid[0][2].position];
-  } else if (
-    grid[1][0].marker !== "" &&
-    grid[1][0].marker === grid[1][1].marker &&
-    grid[1][1].marker === grid[1][2].marker
-  ) {
-    return [grid[1][0].position, grid[1][1].position, grid[1][2].position];
-  } else if (
-    grid[2][0].marker !== "" &&
-    grid[2][0].marker === grid[2][1].marker &&
-    grid[2][1].marker === grid[2][2].marker
-  ) {
-    return [grid[2][0].position, grid[2][1].position, grid[2][2].position];
-  } else if (
-    grid[0][0].marker !== "" &&
-    grid[0][0].marker === grid[1][0].marker &&
-    grid[1][0].marker === grid[2][0].marker
-  ) {
-    return [grid[0][0].position, grid[1][0].position, grid[2][0].position];
-  } else if (
-    grid[0][1].marker !== "" &&
-    grid[0][1].marker === grid[1][1].marker &&
-    grid[1][1].marker === grid[2][1].marker
-  ) {
-    return [grid[0][1].position, grid[1][1].position, grid[2][1].position];
-  } else if (
-    grid[0][2].marker !== "" &&
-    grid[0][2].marker === grid[1][2].marker &&
-    grid[1][2].marker === grid[2][2].marker
-  ) {
-    return [grid[0][2].position, grid[1][2].position, grid[2][2].position];
-  } else if (
-    grid[0][0].marker !== "" &&
-    grid[0][0].marker === grid[1][1].marker &&
-    grid[1][1].marker === grid[2][2].marker
-  ) {
-    return [grid[0][0].position, grid[1][1].position, grid[2][2].position];
-  } else if (
-    grid[0][2].marker !== "" &&
-    grid[0][2].marker === grid[1][1].marker &&
-    grid[1][1].marker === grid[2][0].marker
-  ) {
-    return [grid[0][2].position, grid[1][1].position, grid[2][0].position];
-  } else {
-    return false;
+  const maxIndex = grid.length - 1;
+  for (let i = 0; i < grid.length; i++) {
+    for (let j = 0; j < grid[i].length; j++) {
+      //horizontal check
+      if (grid[i][j + maxIndex]) {
+        const tempArr = [];
+        let matchCounter = 0;
+        let tempCounter = 0;
+        while (tempCounter < grid.length) {
+          if (
+            grid[i][j].marker !== "" &&
+            grid[i][j].marker === grid[i][j + matchCounter].marker
+          ) {
+            tempArr.push([i, j + matchCounter]);
+            matchCounter++;
+          }
+          tempCounter++;
+        }
+        if (matchCounter === grid.length) {
+          return tempArr;
+        }
+      }
+      //vertical check
+      if (grid[i + maxIndex]) {
+        const tempArr = [];
+        let matchCounter = 0;
+        let tempCounter = 0;
+        while (tempCounter < grid.length) {
+          if (
+            grid[i][j].marker !== "" &&
+            grid[i][j].marker === grid[i + matchCounter][j].marker
+          ) {
+            tempArr.push([i + matchCounter, j]);
+            matchCounter++;
+          }
+          tempCounter++;
+        }
+        if (matchCounter === grid.length) {
+          return tempArr;
+        }
+      }
+      //diagonal check top left to bottom right
+      if (grid[i + maxIndex] && grid[i + maxIndex][j + maxIndex]) {
+        const tempArr = [];
+        let matchCounter = 0;
+        let tempCounter = 0;
+        while (tempCounter < grid.length) {
+          if (
+            grid[i][j].marker !== "" &&
+            grid[i][j].marker ===
+              grid[i + matchCounter][j + matchCounter].marker
+          ) {
+            tempArr.push([i + matchCounter, j + matchCounter]);
+            matchCounter++;
+          }
+          tempCounter++;
+        }
+        if (matchCounter === grid.length) {
+          return tempArr;
+        }
+      } //diagonal check top right to bottom left
+      if (grid[i + maxIndex] && grid[i][j + maxIndex]) {
+        const tempArr = [];
+        let matchCounter = 0;
+        let tempCounter = 0;
+        while (tempCounter < grid.length) {
+          if (
+            grid[i][j + maxIndex].marker !== "" &&
+            grid[i][j + maxIndex].marker ===
+              grid[i + matchCounter][j + maxIndex - matchCounter].marker
+          ) {
+            tempArr.push([i + matchCounter, j + maxIndex - matchCounter]);
+            matchCounter++;
+          }
+          tempCounter++;
+        }
+        if (matchCounter === grid.length) {
+          return tempArr;
+        }
+      }
+    }
   }
+  return false;
 }
 
 /**

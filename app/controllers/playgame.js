@@ -38,6 +38,11 @@ export default class PlaygameController extends Controller {
     this.set("model.grid", createGrid(size));
   }
 
+  /**
+   * enables the submit button on the player name form
+   * it does this by checking that both inputs have a value
+   * both must have a value to be enabled
+   */
   enableSubmit() {
     if (this.playerA && this.playerB) {
       this.disabledSubmit = false;
