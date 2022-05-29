@@ -8,28 +8,31 @@ import {
   getNextMarker,
   getNextName,
   selectFirstPlayer,
-  // moveComputer,
+  randomIntFromInterval,
 } from "../utils/tictactoe";
 
 export default class PlaygameController extends Controller {
   constructor() {
     super(...arguments);
-    this.userView = "entrance"; //game starts with welcome page
+    this.userView = "entrance"; // game starts with welcome page
   }
   @tracked onePlayer;
-  @tracked userView; //{string} used to decide what to render to the user
-  //{boolean} name submit button disabled by default
+  @tracked userView; // {string} used to decide what to render to the user
+  // {boolean} name submit button disabled by default
   @tracked disabledSubmit = true;
-  @tracked currentMarker; //{string} current marker either "x" or "o"
-  @tracked currentName; //{string} Name of player who's move it is
-  @tracked playerA; //{string} Name of player from first input
-  @tracked playerB; //{string} Name of player from second input
+  @tracked currentMarker; // {string} current marker either "x" or "o"
+  @tracked currentName; // {string} Name of player who's move it is
+  @tracked playerA; // {string} Name of player from first input
+  @tracked playerB; // {string} Name of player from second input
   @tracked isComputerMove = false;
-  @tracked draw; //{boolean} true if no more spaces and no winner
-  @tracked winner; //{string} name of winning player;
-  @tracked isFirstGame = true; //{boolean} true if very first game, turns false after 
+  @tracked draw; // {boolean} true if no more spaces and no winner
+  @tracked winner; // {string} name of winning player;
+  @tracked isFirstGame = true; // {boolean} true if very first game, turns false after
   // first game is played and users choose "same players"
   gamesPlayed = 0;
+  currentAiMarker; //
+  currentHuMarker;
+  gridCopy; // Only for use in minimax iteration
   localGrid;
   /**
    * creates a nested array with as many arrays as size and as many objects in
@@ -75,6 +78,7 @@ export default class PlaygameController extends Controller {
   }
   @action
   showInputNames() {
+    this.onePlayer = false;
     this.userView = "playerNames";
   }
 
@@ -118,10 +122,10 @@ export default class PlaygameController extends Controller {
   newGame(e) {
     e.preventDefault();
     this.userView = "playingGame"; //reveals the grid and player sections
-    if (this.gamesPlayed) {
+    if (this.gamesPlayed > 0) {
       this.isFirstGame = false;
     }
-    this.gamesPlayed++
+    this.gamesPlayed++;
     this.winner = null;
     this.draw = null;
     this.currentMarker = "x"; // first move is x
@@ -132,30 +136,40 @@ export default class PlaygameController extends Controller {
       set(this.model.players[0], "marker", "x");
       set(this.model.players[1], "marker", "o");
       this.currentName = this.playerA;
+      if (this.onePlayer) {
+        this.currentHuMarker = "x";
+        this.currentAiMarker = "o";
+      }
     } else {
       set(this.model.players[1], "marker", "x");
       set(this.model.players[0], "marker", "o");
       this.currentName = this.playerB;
-      this.isComputerMove = true;
+      if (this.onePlayer) {
+        this.isComputerMove = true;
+        this.currentAiMarker = "x";
+        this.currentHuMarker = "o";
+      }
     }
-    //actually creates the 3x3 grid
-    //setGrid will respond to any size but currently set to 3
+    // actually creates the 3x3 grid
+    // setGrid will respond to any size but currently set to 3
     this.setGrid(3);
     this.setGridLocal(3);
-    if (this.isComputerMove) {
-      const bestPosition = this.moveComputer(
-        this.localGrid,
-        this.currentMarker
+
+    // If computer goes first, computer move will be a random spot (save in cpu processing);
+    if (this.isComputerMove && this.onePlayer) {
+      const startPos = [
+        randomIntFromInterval(0, 2),
+        randomIntFromInterval(0, 2),
+      ];
+      set(
+        this.localGrid[startPos[0]][startPos[1]],
+        "marker",
+        this.currentAiMarker
       );
       set(
-        this.localGrid[bestPosition[0]][bestPosition[1]],
+        this.model.grid[startPos[0]][startPos[1]],
         "marker",
-        this.currentMarker
-      );
-      set(
-        this.model.grid[bestPosition[0]][bestPosition[1]],
-        "marker",
-        this.currentMarker
+        this.currentAiMarker
       );
       this.currentMarker = getNextMarker(this.currentMarker);
       this.currentName = getNextName(
@@ -180,6 +194,8 @@ export default class PlaygameController extends Controller {
     this.userView = "playerNames";
     this.gamesPlayed = 0;
     this.isFirstGame = true;
+    this.isComputerMove = false;
+    this.onePlayer = false;
   }
 
   /**
@@ -195,9 +211,8 @@ export default class PlaygameController extends Controller {
   @action
   makeMove(position) {
     if (!this.isComputerMove) {
-      /**First the square's marker attribute in the model is changed to the
-       *currentMarker.
-       */
+      // First the square's marker attribute in the model is changed to the
+      // currentMarker.
       set(
         this.localGrid[position[0]][position[1]],
         "marker",
@@ -209,11 +224,11 @@ export default class PlaygameController extends Controller {
         this.currentMarker
       );
       let winSquares = isWinner(this.model.grid);
-      //if a winner winSquares returns an array with position indexes of the
-      //winning squares
+      // if a winner winSquares returns an array with position indexes of the
+      // winning squares
       if (winSquares) {
-        //check for a winner
-        //If true the winners wins attribute in the model increases by one
+        // check for a winner
+        // If true the winners wins attribute in the model increases by one
         this.winner = this.currentName;
         const WIN_INCREMENT = 1;
         if (this.model.players[0].name === this.winner) {
@@ -235,143 +250,150 @@ export default class PlaygameController extends Controller {
          * @param {Array} square is an array of two position indexes to acces the
          * squares in the model
          */
-        winSquares.forEach((square) => {
+        winSquares.winArr.forEach((square) => {
           set(this.model.grid[square[0]][square[1]], "isWinningSquare", true);
         });
         this.userView = "endGame"; //view goes to end game on win
       } else if (!stillHasSpaces(this.model.grid)) {
-        //check to see if there are more playable spaces
+        // check to see if there are more playable spaces
         this.draw = true;
         this.userView = "endGame"; //view goes to end game on draw
       } else {
-        //if more free spaces, next turn, we update currentMarker and CurrentName
+        // if more free spaces, next turn, we update currentMarker and CurrentName
         this.currentMarker = getNextMarker(this.currentMarker);
         this.currentName = getNextName(
           this.currentName,
           this.playerA,
           this.playerB
         );
-        const bestPosition = this.moveComputer(
-          this.localGrid,
-          this.currentMarker
-        );
-        set(
-          this.localGrid[bestPosition[0]][bestPosition[1]],
-          "marker",
-          this.currentMarker
-        );
-        set(
-          this.model.grid[bestPosition[0]][bestPosition[1]],
-          "marker",
-          this.currentMarker
-        );
-        let cwinSquares = isWinner(this.model.grid);
-        //if a winner cwinSquares returns an array with position indexes of the
-        //winning squares
-        if (cwinSquares) {
-          //check for a winner
-          //If true the winners wins attribute in the model increases by one
-          this.winner = this.currentName;
-          const WIN_INCREMENT = 1;
-          if (this.model.players[0].name === this.winner) {
-            set(
-              this.model.players[0],
-              "wins",
-              this.model.players[0].wins + WIN_INCREMENT
-            );
-          } else if (this.model.players[1].name === this.winner) {
-            set(
-              this.model.players[1],
-              "wins",
-              this.model.players[1].wins + WIN_INCREMENT
-            );
-          }
-          /**
-           * changes each square's isWinningSquare value to true in the model This
-           * allows for rendering of the winning squares in the template
-           * @param {Array} square is an array of two position indexes to acces the
-           * squares in the model
-           */
-          cwinSquares.forEach((square) => {
-            set(this.model.grid[square[0]][square[1]], "isWinningSquare", true);
-          });
-          this.userView = "endGame"; //view goes to end game on win
-        } else if (!stillHasSpaces(this.model.grid)) {
-          //check to see if there are more playable spaces
-          this.draw = true;
-          this.userView = "endGame"; //view goes to end game on draw
-        } else {
-          this.currentMarker = getNextMarker(this.currentMarker);
-          this.currentName = getNextName(
-            this.currentName,
-            this.playerA,
-            this.playerB
+        if (this.onePlayer) {
+          this.isComputerMove = true;
+        }
+
+      }
+    }
+
+    if (this.isComputerMove && this.onePlayer) {
+      const bestPosition = this.moveComputer(this.localGrid);
+      set(
+        this.localGrid[bestPosition[0]][bestPosition[1]],
+        "marker",
+        this.currentMarker
+      );
+      set(
+        this.model.grid[bestPosition[0]][bestPosition[1]],
+        "marker",
+        this.currentMarker
+      );
+      let cwinSquares = isWinner(this.model.grid);
+      // if a winner cwinSquares returns an array with position indexes of the
+      // winning squares
+      if (cwinSquares) {
+        // check for a winner
+        // If true the winners wins attribute in the model increases by one
+        this.winner = this.currentName;
+        const WIN_INCREMENT = 1;
+        if (this.model.players[0].name === this.winner) {
+          set(
+            this.model.players[0],
+            "wins",
+            this.model.players[0].wins + WIN_INCREMENT
+          );
+        } else if (this.model.players[1].name === this.winner) {
+          set(
+            this.model.players[1],
+            "wins",
+            this.model.players[1].wins + WIN_INCREMENT
           );
         }
+        /**
+         * changes each square's isWinningSquare value to true in the model This
+         * allows for rendering of the winning squares in the template
+         * @param {Array} square is an array of two position indexes to acces the
+         * squares in the model
+         */
+        cwinSquares.winArr.forEach((square) => {
+          set(this.model.grid[square[0]][square[1]], "isWinningSquare", true);
+        });
+        this.isComputerMove = false; // reset computer move for new game
+        this.userView = "endGame"; // view goes to end game on win
+      } else if (!stillHasSpaces(this.model.grid)) {
+        // check to see if there are more playable spaces
+        this.draw = true;
+        this.userView = "endGame"; //view goes to end game on draw
+      } else {
+        this.currentMarker = getNextMarker(this.currentMarker);
+        this.currentName = getNextName(
+          this.currentName,
+          this.playerA,
+          this.playerB
+        );
+        this.isComputerMove = false;
       }
     }
   }
 
-
-  moveComputer(grid, currentMarker) {
-    const result = this.minimax(grid, 0, true, currentMarker);
-    return result;
-  }
-
-  minimax(newGrid, depth, isComputer, currentMarker) {
-    const result = isWinner(newGrid);
-    const freeSpaces = stillHasSpaces(newGrid);
-
-    if (result === false && freeSpaces) {
-      //not win or tie
-      const scores = [];
-      let gridCopy = JSON.parse(JSON.stringify(newGrid));
-      for (let i = 0; i < gridCopy.length; i++) {
-        for (let j = 0; j < gridCopy[i].length; j++) {
-          if (gridCopy[i][j].marker === "") {
-            gridCopy[i][j].marker = currentMarker;
-            const score = this.minimax(
-              gridCopy,
-              depth + 1,
-              isComputer === true ? false : true,
-              currentMarker === "x" ? "o" : "x"
-            );
-            scores.push({ score: score, position: [i, j] });
+  moveComputer(grid) {
+    this.gridCopy = JSON.parse(JSON.stringify(grid));
+    let bestScore = -Infinity;
+    let move;
+    for (let i = 0; i < this.gridCopy.length; i++) {
+      for (let j = 0; j < this.gridCopy[i].length; j++) {
+        if (grid[i][j].marker === "") {
+          this.gridCopy[i][j].marker = this.currentAiMarker;
+          let score = this.minimax(this.gridCopy, 0, false);
+          this.gridCopy[i][j].marker = "";
+          if (score > bestScore) {
+            bestScore = score;
+            move = [i,j];
           }
         }
       }
-      if (isComputer) {
-        const max = scores.reduce((prev, curr) => {
-          return prev.score > curr.score ? prev : curr;
-        });
-        if (depth === 0) {
-          return max.position;
-        } else {
-          return max.score;
-        }
-      } else {
-        const min = scores.reduce((prev, curr) => {
-          return prev.score < curr.score ? prev : curr;
-        });
-        if (depth === 0) {
-          return min.position;
-        } else {
-          return min.score;
-        }
-      }
-    } else if (result === false && !freeSpaces) {
+    }
+    return move;
+  }
+
+  minimax(gridCopy, depth, isComputer) {
+    const result = isWinner(gridCopy);
+    const freeSpaces = stillHasSpaces(gridCopy);
+    if (result === false && !freeSpaces) {
       //tie
       return 0;
-    } else if (result && !isComputer) {
+    } else if (result.winMarker === this.currentHuMarker) {
       //human won
-      let mins = depth - 10;
-      return mins;
-      // return -10;
-    } else if (result && isComputer) {
+      return -10;
+    } else if (result.winMarker === this.currentAiMarker) {
       //computer won
-      let maxes = 10 - depth;
-      return maxes;
-      // return 10;
+      return 10;
+    }
+
+    if (isComputer) {
+      // not win or tie
+      let bestScore = -Infinity;
+      for (let i = 0; i < gridCopy.length; i++) {
+        for (let j = 0; j < gridCopy[i].length; j++) {
+          if (gridCopy[i][j].marker === "") {
+            gridCopy[i][j].marker = this.currentAiMarker;
+            let score = this.minimax(gridCopy, depth + 1, false);
+            gridCopy[i][j].marker = "";
+            bestScore = Math.max(score, bestScore);
+          }
+        }
+      }
+      return bestScore;
+    } else {
+      let bestScore = Infinity;
+      for (let i = 0; i < gridCopy.length; i++) {
+        for (let j = 0; j < gridCopy[i].length; j++) {
+          if (gridCopy[i][j].marker === "") {
+            gridCopy[i][j].marker = this.currentHuMarker;
+            let score = this.minimax(gridCopy, depth + 1, true);
+            gridCopy[i][j].marker = "";
+            bestScore = Math.min(score, bestScore);
+          }
+        }
+      }
+      return bestScore;
     }
   }
 }
