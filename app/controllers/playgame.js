@@ -123,13 +123,11 @@ export default class PlaygameController extends Controller {
       set(this.model.players[0], "marker", "x");
       set(this.model.players[1], "marker", "o");
       this.currentName = this.playerA;
-      console.log("it's human move");
     } else {
       set(this.model.players[1], "marker", "x");
       set(this.model.players[0], "marker", "o");
       this.currentName = this.playerB;
       this.isComputerMove = true;
-      console.log("it's computers move");
     }
     //actually creates the 3x3 grid
     //setGrid will respond to any size but currently set to 3
@@ -140,9 +138,6 @@ export default class PlaygameController extends Controller {
         this.localGrid,
         this.currentMarker
       );
-      console.log("best p", bestPosition);
-      console.log("model", this.model.grid);
-      console.log("local", this.localGrid);
       set(
         this.localGrid[bestPosition[0]][bestPosition[1]],
         "marker",
@@ -249,9 +244,6 @@ export default class PlaygameController extends Controller {
           this.localGrid,
           this.currentMarker
         );
-        console.log("best p2b", bestPosition);
-        console.log("modelb", this.model.grid);
-        console.log("localb", this.localGrid);
         set(
           this.localGrid[bestPosition[0]][bestPosition[1]],
           "marker",
