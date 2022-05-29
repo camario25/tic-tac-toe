@@ -78,8 +78,8 @@ function createGrid(size) {
  * vertical, diagonal). Function can check an NxN grid.
  * @param {Array.<Array.<Object>>} grid grid Two dimensional array with objects
  * representing a tictactoe square
- * @returns {(Array | boolean)} Returs an Array containing the position indexes
- * of the squares that match 3 in a row. False if these conditions are not met.
+ * @returns {(Object | boolean)} Returs an Object containing and Array of the position indexes
+ * of the squares that match 3 in a row. And the winning marker: 'o' or 'x'. False if these conditions are not met.
  */
 function isWinner(grid) {
   const maxIndex = grid.length - 1;
@@ -101,7 +101,7 @@ function isWinner(grid) {
           tempCounter++;
         }
         if (matchCounter === grid.length) {
-          return tempArr;
+          return {winArr: tempArr, winMarker: grid[i][j].marker};
         }
       }
       //vertical check
@@ -120,7 +120,7 @@ function isWinner(grid) {
           tempCounter++;
         }
         if (matchCounter === grid.length) {
-          return tempArr;
+          return {winArr: tempArr, winMarker: grid[i][j].marker};
         }
       }
       //diagonal check top left to bottom right
@@ -140,7 +140,7 @@ function isWinner(grid) {
           tempCounter++;
         }
         if (matchCounter === grid.length) {
-          return tempArr;
+          return {winArr: tempArr, winMarker: grid[i][j].marker};
         }
       } //diagonal check top right to bottom left
       if (grid[i + maxIndex] && grid[i][j + maxIndex]) {
@@ -159,7 +159,7 @@ function isWinner(grid) {
           tempCounter++;
         }
         if (matchCounter === grid.length) {
-          return tempArr;
+          return {winArr: tempArr, winMarker: grid[i][j + maxIndex].marker};
         }
       }
     }
@@ -246,69 +246,9 @@ function selectFirstPlayer(randomNumber) {
   return randomNumber < FIFTY_PERCENT_CHANCE ? "x" : "o";
 }
 
-// function moveComputer(grid, currentMarker) {
-//   return minimax(grid, 0, true, currentMarker);
-// }
-
-// function minimax(newGrid, depth, isComputer, currentMarker) {
-//   const result = isWinner(newGrid);
-//   const freeSpaces = stillHasSpaces(newGrid);
-
-//   if (result === false && freeSpaces) {
-//     //not win or tie
-//     const scores = [];
-//     const gridCopy = newGrid.map((square) => square);
-//     console.log(gridCopy);
-//     for (let i = 0; i < gridCopy.length; i++) {
-//       for (let j = 0; j < gridCopy[i].length; j++) {
-//         if (gridCopy[i][j].marker === "") {
-//           console.log("hi", gridCopy[i][j], currentMarker);
-//           gridCopy[i][j].marker = currentMarker;
-//           const score = minimax(
-//             gridCopy,
-//             depth + 1,
-//             isComputer === true ? false : true,
-//             currentMarker === "x" ? "o" : "x"
-//           );
-//           scores.push({ score, position: [i, j] });
-//           console.log(scores);
-//         }
-//       }
-//     }
-//     if (isComputer) {
-//       console.log("max", scores);
-//       const max = scores.reduce((prev, curr) => {
-//         console.log(prev, curr);
-//         return prev.score > curr.score ? prev : curr, null;
-//       });
-//       if (depth === 0) {
-//         return max.position;
-//       } else {
-//         return max.score;
-//       }
-//     } else {
-//       console.log("min", scores);
-//       const min = scores.reduce((prev, curr) => {
-//         console.log(prev, curr);
-//         return prev.score < curr.score ? prev : curr, null;
-//       });
-//       if (depth === 0) {
-//         return min.position;
-//       } else {
-//         return min.score;
-//       }
-//     }
-//   } else if (!freeSpaces) {
-//     //tie
-//     return 0;
-//   } else if (result && !isComputer) {
-//     //human won
-//     return depth - 10;
-//   } else if (result && isComputer) {
-//     //computer won
-//     return 10 - depth;
-//   }
-// }
+function randomIntFromInterval(min, max) { // min and max included 
+  return Math.floor(Math.random() * (max - min + 1) + min)
+}
 
 export {
   createGrid,
@@ -317,5 +257,5 @@ export {
   getNextMarker,
   getNextName,
   selectFirstPlayer,
-  // moveComputer,
+  randomIntFromInterval
 };
