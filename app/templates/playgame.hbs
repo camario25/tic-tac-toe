@@ -121,12 +121,14 @@
         {{/each}}
       {{/each}}
     </GameSection>
-    <GameSection @class="audio-section">
-      <audio controls autoplay>
-          <source src="assets/sounds/neety-greety.mp3">
-          Sorry, your browser does not support the audio controls.
-      </audio>
-    </GameSection>
+    {{#if this.isFirstGame}}
+      <GameSection @class="audio-section">
+        <audio controls autoplay>
+            <source src="assets/sounds/neety-greety.mp3">
+            Sorry, your browser does not support the audio controls.
+        </audio>
+      </GameSection>
+    {{/if}}
     <Footer @clickFunction={{this.showEntrance}}/>
 
   {{else if (eq this.userView "endGame")}}

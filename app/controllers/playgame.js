@@ -27,6 +27,9 @@ export default class PlaygameController extends Controller {
   @tracked isComputerMove = false;
   @tracked draw; //{boolean} true if no more spaces and no winner
   @tracked winner; //{string} name of winning player;
+  @tracked isFirstGame = true; //{boolean} true if very first game, turns false after 
+  // first game is played and users choose "same players"
+  gamesPlayed = 0;
   localGrid;
   /**
    * creates a nested array with as many arrays as size and as many objects in
@@ -79,6 +82,8 @@ export default class PlaygameController extends Controller {
   showEntrance() {
     if (window.confirm("Do you really want to start over?")) {
       this.userView = "entrance";
+      this.gamesPlayed = 0;
+      this.isFirstGame = true;
     }
     return
   }
@@ -113,6 +118,10 @@ export default class PlaygameController extends Controller {
   newGame(e) {
     e.preventDefault();
     this.userView = "playingGame"; //reveals the grid and player sections
+    if (this.gamesPlayed) {
+      this.isFirstGame = false;
+    }
+    this.gamesPlayed++
     this.winner = null;
     this.draw = null;
     this.currentMarker = "x"; // first move is x
@@ -169,6 +178,8 @@ export default class PlaygameController extends Controller {
     set(this.model.players[0], "wins", 0);
     set(this.model.players[1], "wins", 0);
     this.userView = "playerNames";
+    this.gamesPlayed = 0;
+    this.isFirstGame = true;
   }
 
   /**
