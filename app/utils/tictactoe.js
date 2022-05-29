@@ -73,7 +73,7 @@ function createGrid(size) {
 }
 
 /**
- * Dertirmines if there's a  Winner by checking if object value marker is not
+ * Dertermines if there's a  Winner by checking if object value marker is not
  * empty and equal to the other markers in a row in any direction (horzontal,
  * vertical, diagonal). Function can check an NxN grid.
  * @param {Array.<Array.<Object>>} grid grid Two dimensional array with objects
@@ -214,7 +214,7 @@ function stillHasSpaces(grid) {
  * @param {string} marker takes the current marker "x" or "o"
  * @returns {string} Returns the opposite of marker, "x" or "o"
  */
-function getCurrentMarker(marker) {
+function getNextMarker(marker) {
   return marker === "x" ? "o" : "x";
 }
 
@@ -229,7 +229,7 @@ function getCurrentMarker(marker) {
  * @param {string} playerB name of player assinged to this param
  * @returns {string} Name of player who does not equal currentName
  */
-function getCurrentName(currentName, playerA, playerB) {
+function getNextName(currentName, playerA, playerB) {
   return currentName === playerA ? playerB : playerA;
 }
 
@@ -246,11 +246,76 @@ function selectFirstPlayer(randomNumber) {
   return randomNumber < FIFTY_PERCENT_CHANCE ? "x" : "o";
 }
 
+// function moveComputer(grid, currentMarker) {
+//   return minimax(grid, 0, true, currentMarker);
+// }
+
+// function minimax(newGrid, depth, isComputer, currentMarker) {
+//   const result = isWinner(newGrid);
+//   const freeSpaces = stillHasSpaces(newGrid);
+
+//   if (result === false && freeSpaces) {
+//     //not win or tie
+//     const scores = [];
+//     const gridCopy = newGrid.map((square) => square);
+//     console.log(gridCopy);
+//     for (let i = 0; i < gridCopy.length; i++) {
+//       for (let j = 0; j < gridCopy[i].length; j++) {
+//         if (gridCopy[i][j].marker === "") {
+//           console.log("hi", gridCopy[i][j], currentMarker);
+//           gridCopy[i][j].marker = currentMarker;
+//           const score = minimax(
+//             gridCopy,
+//             depth + 1,
+//             isComputer === true ? false : true,
+//             currentMarker === "x" ? "o" : "x"
+//           );
+//           scores.push({ score, position: [i, j] });
+//           console.log(scores);
+//         }
+//       }
+//     }
+//     if (isComputer) {
+//       console.log("max", scores);
+//       const max = scores.reduce((prev, curr) => {
+//         console.log(prev, curr);
+//         return prev.score > curr.score ? prev : curr, null;
+//       });
+//       if (depth === 0) {
+//         return max.position;
+//       } else {
+//         return max.score;
+//       }
+//     } else {
+//       console.log("min", scores);
+//       const min = scores.reduce((prev, curr) => {
+//         console.log(prev, curr);
+//         return prev.score < curr.score ? prev : curr, null;
+//       });
+//       if (depth === 0) {
+//         return min.position;
+//       } else {
+//         return min.score;
+//       }
+//     }
+//   } else if (!freeSpaces) {
+//     //tie
+//     return 0;
+//   } else if (result && !isComputer) {
+//     //human won
+//     return depth - 10;
+//   } else if (result && isComputer) {
+//     //computer won
+//     return 10 - depth;
+//   }
+// }
+
 export {
   createGrid,
   isWinner,
   stillHasSpaces,
-  getCurrentMarker,
-  getCurrentName,
+  getNextMarker,
+  getNextName,
   selectFirstPlayer,
+  // moveComputer,
 };
