@@ -2,8 +2,8 @@ import {
   createGrid,
   isWinner,
   stillHasSpaces,
-  getCurrentMarker,
-  getCurrentName,
+  getNextMarker,
+  getNextName,
   selectFirstPlayer,
 } from "tic-tac-toe/utils/tictactoe";
 import { module, test } from "qunit";
@@ -226,9 +226,9 @@ module("Unit | Utility | tictactoe", function () {
   test("it should return opposite marker", function (assert) {
     const markerX = "x";
     const markerO = "o";
-    const result1 = getCurrentMarker("x");
+    const result1 = getNextMarker("x");
     assert.equal(result1, markerO, "x was properly changed to o");
-    const result2 = getCurrentMarker("o");
+    const result2 = getNextMarker("o");
     assert.equal(result2, markerX, "o was properly changed to x");
   });
 
@@ -237,7 +237,7 @@ module("Unit | Utility | tictactoe", function () {
     const playerA = "test-name1";
     const playerB = "test-name2";
 
-    const result = getCurrentName(currentName, playerA, playerB);
+    const result = getNextName(currentName, playerA, playerB);
     assert.equal(
       result,
       playerB,

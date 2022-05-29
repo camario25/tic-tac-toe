@@ -1,21 +1,44 @@
-.game-footer__menu {
-  margin-top: 4rem;
-  .game-footer-menu__item {
-    margin: 1.5rem;
-    font-size: 2rem;
-    text-decoration: none;
+.game-footer {
+  .game-footer__button--start-over {
+    margin-top: 2rem;
+    font-size: 1.5rem;
+    width: 9rem;
+    height: 3rem;
+    border-radius: 0.25rem;
+    border: .15rem solid $burgundy;
+    background-color: $white;
     color: $burgundy;
-    &:hover {
-      color: $dark-turquoise;
+    @media only screen and (min-width: 64rem) {
+      &:focus,
+      &:hover {
+        box-shadow: 0 0 0 .1rem $dark-turquoise;
+        border-color: $dark-turquoise;
+        color: $dark-turquoise;
+      }
     }
-    @media only screen and (max-width: $grid-side-length + 1) {
-      margin: 0.5rem;
+    @media only screen and (max-width: 64rem) {
+      height: 4rem;
     }
   }
-  .game-footer-menu-item__icon {
-    margin: 0.5rem;
-    @media only screen and (max-width: $grid-side-length + 1) {
-      margin: 0.1rem;
+  .game-footer__menu {
+    margin-top: 2rem;
+    .game-footer-menu__item {
+      margin: 1.5rem;
+      font-size: 2rem;
+      text-decoration: none;
+      color: $burgundy;
+      &:hover {
+        color: $dark-turquoise;
+      }
+      @media only screen and (max-width: $grid-side-length + 1) {
+        margin: 0.5rem;
+      }
+    }
+    .game-footer-menu-item__icon {
+      margin: 0.5rem;
+      @media only screen and (max-width: $grid-side-length + 1) {
+        margin: 0.1rem;
+      }
     }
   }
 }
