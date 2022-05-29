@@ -6,6 +6,10 @@ Efforts were made to provide a great user experience for all users. The app take
 
 The website passes AA accessibility thresholds in contrast and contains semantic html with proper labeling and text. Screen readers should allow a person with limited vision the ability to play this game using the keyboard. Mouse users will enjoy the responsive components and feedback on hover. The game can be played on desktop, tablet, or phone.
 
+## Try playing the game
+
+The game is currently deployed at https://ticnacho.z22.web.core.windows.net/.
+
 ## The code
 
 The app was built using html, scss, and javascript using the Ember.js framework version 3.18 (Ember Octane). Efforts were made to create well commented/documented code that was modularized and as clear as possible. The html is semantic, the scss is modularized, and the javascript is well documented, tested, and reusable.
@@ -20,13 +24,13 @@ Once I built the MVP with good comments and some tests, I had friends and family
 
 ## Player experience
 
-Tic-Na-Cho is currently a 2 player game. Players will arrive at a welcome screen introducing them to the Nacho Libre theme. Players will then click to enter the game. Players will arrive at a form to submit their names. Once they submit they will be greeted with their assignments, Nacho: "x" or Ramses: "o." There is also a scoreboard keeping track of the wins by player name. The current player is clearly displayed.
+Players will arrive at a welcome screen introducing them to the Nacho Libre theme. Players will then click to to choose 1 player or 2 player game. Players will arrive at a form to submit their names. Once they submit they will be greeted with their assignments, Nacho: "x" or Ramses: "o." There is also a scoreboard keeping track of the wins by player name. The current player is clearly displayed.
 
 Players can now add a marker on the grid with a click or tabbing and pressing enter. Players take turns until the game ends in a win or draw. Players experience a different image, sound, and quote depending on the three possible outcomes. Finally, players can select to play again keeping track of their wins or play with new names/players in which case the scoreboard resets. If the button new-players is selected, users return to the player name input form. Players only enter the welcome screen on a refresh.
 
 ## Future considerations
 
-I am pleased with the UX, UI, but due to time constraints I did not extend the game logic as much as I would have liked. I really want to implement an AI to allow users to play one player games against the computer.
+I am pleased with the UX, UI, but due to time constraints I did not extend the game logic as much as I would have liked. I recently attempted to implement the minimax algorithm but it is currently behaving like a random computer. Some challenges are the way the state of the board is saved and how the algorithm manipulates the board. I have tried to make a copy of the board but have not succeeded on getting it to work 100%. 
 
 # To Run Code from zipped package
 
