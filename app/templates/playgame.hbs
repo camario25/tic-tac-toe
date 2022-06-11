@@ -8,12 +8,14 @@
       <div class="game-header-img-wrapper">
         <img class="game-header__img" src="assets/images/nacho-vs-ramses.jpeg" alt="Nacho vs Ramses">
       </div>
-      <Button @class="game__button--enter" @function={{this.showInputSingle}} @data-test="game__button--enter">
-        One Player
-      </Button>
-      <Button @class="game__button--enter" @function={{this.showInputNames}} @data-test="game__button--enter">
-        Two Player
-      </Button>
+      <div class="game-header-button-container">
+        <Button @class="game__button--enter" @function={{this.showInputSingle}} @data-test="game__button--enter">
+          One Player
+        </Button>
+        <Button @class="game__button--enter" @function={{this.showInputNames}} @data-test="game__button--enter">
+          Two Player
+        </Button>
+      </div>
     </GameSection>
   {{/if}}
 
