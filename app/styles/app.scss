@@ -53,3 +53,11 @@
     }
   }
 }
+
+// to prevent horizontal scrolling on phones
+html, body {
+  overflow-x: hidden;
+}
+body {
+  width:100%;
+}
